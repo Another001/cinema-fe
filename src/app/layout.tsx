@@ -31,12 +31,16 @@ export default function RootLayout({
   return (
     <html
       lang="vi"
-      // Sử dụng biến của Playfair và Outfit ở đây
       className={`${playfair.variable} ${outfit.variable} h-full antialiased`}
     >
-      <body className="min-h-full font-sans bg-[#0a0a0a] text-white">
+      <body className="font-sans bg-[#0a0a0a] text-white overflow-x-hidden">
         <Header />
-        {children}
+        <main className="hero-bg relative min-h-screen flex flex-col">
+          <div className="hero-glow-container"></div>
+          <div className="relative z-10 flex-1">
+            {children}
+          </div>
+        </main>
       </body>
     </html>
   );

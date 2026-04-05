@@ -3,6 +3,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --font-outfit: 'Outfit', sans-serif;
+  --font-playfair: 'Playfair Display', serif;
 }
 
 @theme inline {
@@ -29,6 +31,16 @@ body {
 @tailwind components;
 @tailwind utilities;
 
+html {
+  max-width: 100%;
+  background-color: #0a0a0a;
+}
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+  background-color: #0a0a0a;
+}
+
 :root {
   --gold-primary: #eab308;
 }
@@ -36,7 +48,6 @@ body {
 .hero-bg {
   background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 30%, #0d1b2a 60%, #0a0a0a 100%);
   position: relative;
-  overflow: hidden;
 }
 
 .hero-bg::before {
@@ -96,9 +107,4 @@ body {
 
   /* Bạn có thể thêm màu sắc riêng cho dự án rạp phim ở đây */
   --color-gold: #eab308;
-}
-
-/* Các hiệu ứng cũ của bạn giữ nguyên ở dưới */
-.hero-bg {
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 30%, #0d1b2a 60%, #0a0a0a 100%);
 }

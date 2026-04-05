@@ -25,7 +25,7 @@ export default function LoginPage() {
   const [error, setError] = useState<string>("");
 
   return (
-    <div className="hero-bg min-h-screen flex items-center justify-center p-6">
+    <div className="min-h-screen flex items-center justify-center p-6">
       <div className="film-grain" />
 
       <div className="relative z-10 w-full max-w-md">

@@ -7,16 +7,19 @@ import Calendar from './Calendar';
 import ShowtimeSelector from './ShowtimeSelector';
 import showtimeApi from '@/src/api/showtime';
 import { ShowtimeListResDto } from '@/src/types/Showtime';
+import movieApi from '@/src/api/movie';
 
 export default function BookingPage({ params }: {params: Promise<{ movieId: number }>}) {
+  const resolvedParams = use(params);
+  const movieId = resolvedParams.movieId;
   const [selectedDate, setSelectedDate] = useState<string>(() => formatDate(startOfToday(), 'yyyy-MM-dd'));
   const [selectedCinema, setSelectedCinema] = useState<string | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [selectedFormat, setSelectedFormat] = useState<string | null>(null);
   const [data, setData] = useState<ShowtimeListResDto[]>();
   const [error, setError] = useState("");
-  const resolvedParams = use(params);
-  const movieId = Number(resolvedParams.movieId);
+  const [movieName, setMovieName] = useState("");
+  const[showtimeId, setShowtimeId] = useState();
   useEffect(() => {
     const getData = async () =>{
       try{
@@ -24,6 +27,8 @@ export default function BookingPage({ params }: {params: Promise<{ movieId: numb
         const beginDate = new Date(selectedDate);
         const res = await showtimeApi.listShowtime({movieId: movieId, beginAt: beginDate.toISOString()})
         setData(res);
+        const res2 = await movieApi.getDetailMovie(movieId);
+        setMovieName(res2.name);
       }
       catch{
         setError("Co loi luc tai du lieu");
@@ -33,7 +38,7 @@ export default function BookingPage({ params }: {params: Promise<{ movieId: numb
   },[movieId, selectedDate])
 
 
-  const movieTitle = "Dịch vụ giao hàng của phù thủy Kiki";
+  const movieTitle = movieName;
 
   const handleSelectDate = (date: string) => {
     setSelectedDate(date);
@@ -97,11 +102,12 @@ export default function BookingPage({ params }: {params: Promise<{ movieId: numb
               onSelect={handleSelectShowtime}
               showtimes={data}
               selectedCinema={selectedCinema}
+              setShowtimeId={setShowtimeId}
             />
           </div>
         </div>
 
-        <ActionFooter isReady={isReady} />
+        <ActionFooter isReady={isReady} showtimeId={showtimeId ?? 0}/>
       </main>
     </div>
   );

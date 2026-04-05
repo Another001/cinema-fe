@@ -19,15 +19,17 @@ interface Props {
   }) => void;
   showtimes?: ShowtimeListResDto[];
   selectedCinema: string | null;
+  setShowtimeId: () => void;
 }
 
-export default function ShowtimeSelector({ selectedDate, selectedTime, onSelect, showtimes, selectedCinema }: Props) {
+export default function ShowtimeSelector({ selectedDate, selectedTime, onSelect, showtimes, selectedCinema, setShowtimeId }: Props) {
   const [city, setCity] = useState<string>("Ha Noi");
   const [roomName, setRoomName] = useState<string>("");
   const selectedCity = useMemo(() => {
     const filter = showtimes?.find((item) => item.cityName === city);
     return filter?.cinemas;
   },[city, showtimes])
+  console.log("selectCity la", selectedCity);
   if (!selectedDate) {
     return (
       <div className="bg-white/5 border border-yellow-500/20 rounded-3xl p-12 flex items-center justify-center text-white/40 italic">
@@ -79,6 +81,7 @@ export default function ShowtimeSelector({ selectedDate, selectedTime, onSelect,
                       cinema: cinema.cinemaName,
                       time: slot.beginAt,
                     });
+                    setShowtimeId(slot.id);
                     setRoomName(slot.roomName);
                   }}
                   className={`flex flex-col items-center py-3 rounded-2xl border transition-all

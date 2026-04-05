@@ -1,6 +1,7 @@
 // components/MovieInfo.tsx
 import { Star, Ticket, Bell, Share2 } from 'lucide-react';
 import { MovieGetRes } from '@/src/types/Movie';
+import { useRouter } from 'next/navigation';
 
 const infoItems = [
   { label: 'Đạo diễn', value: 'Hayao Miyazaki' },
@@ -22,6 +23,7 @@ function RenderItems({label, value}: {label?: string, value?: string}){
 }
 
 export default function MovieInfo({movie} : {movie?: MovieGetRes}) {
+  const router = useRouter();
   return (
     <div className="flex flex-col">
       <h1 className="text-3xl md:text-4xl font-black font-serif mb-6 leading-tight text-white">
@@ -48,7 +50,9 @@ export default function MovieInfo({movie} : {movie?: MovieGetRes}) {
       </div>
 
       <div className="flex flex-wrap gap-4">
-        <button className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-black px-8 py-3.5 rounded-full font-bold flex items-center gap-2 hover:-translate-y-0.5 transition shadow-lg shadow-yellow-500/20">
+        <button
+        onClick={() => router.push(`/screens/booking/select-showtime/${movie?.id}`)}
+        className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-black px-8 py-3.5 rounded-full font-bold flex items-center gap-2 hover:-translate-y-0.5 transition shadow-lg shadow-yellow-500/20">
           <Ticket className="w-5 h-5" /> Đặt vé ngay
         </button>
         <button className="bg-transparent border border-white/20 hover:border-yellow-400 px-6 py-3.5 rounded-full font-bold flex items-center gap-2 transition text-white">

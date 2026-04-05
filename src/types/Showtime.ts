@@ -21,3 +21,25 @@ export interface ShowtimeListReqDto{
   movieId: number,
   beginAt: string,
 }
+
+export interface ShowtimeListSeatResDto{
+  id : number,
+  seatName: string,
+  seatType: string,
+  isSeatEmpty: boolean
+}
+
+export interface ShowtimeGetResDto{
+  id: number,
+  roomName: string,
+  movieName: string,
+  beginAt: string,
+  endAt: string,
+  cinemaAddress: string,
+  seatPrices: [
+    {
+      seatType: string,
+      price: number
+    }
+  ]
+}
