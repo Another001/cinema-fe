@@ -6,7 +6,7 @@ import movieApi from '../api/movie';
 import { MovieGetRes } from '../types/Movie';
 import ListMovie from './components/ListMovie';
 import Link from 'next/link';
-
+import MyLoading from './components/Loading'
 function ShowMoreButton({link}: {link : string}){
   return(
     <Link href = {link} className="flex justify-center items-center border border-gray-300 hover:border-yellow-500 rounded-lg my-10 py-2">
@@ -19,6 +19,7 @@ export default function HomePage() {
   const [movieNow, setMovieNow] = useState<MovieGetRes[]>([]);
   const [movieUpcoming, setMovieUpcoming] = useState<MovieGetRes[]>([]);
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   console.log("starttt");
   useEffect(() => {
     const getData = async () =>{
@@ -28,6 +29,7 @@ export default function HomePage() {
         const movieupcoming = await movieApi.getUpcomingMovie();
         setMovieUpcoming(movieupcoming);
         console.log('my dataaaaa', movienow);
+        setIsLoading(false);
       } catch (err) {
         setError(err.message);
       }
@@ -65,8 +67,17 @@ export default function HomePage() {
           <h2 className="text-3xl font-bold font-serif">Phim đang chiếu</h2>
           <p className="text-gray-500 mt-1 text-sm">Những bộ phim hot nhất tại rạp</p>
         </div>
-        <ListMovie movies={movieNow} type = 'now' isListAll={false} />
-        <ShowMoreButton link="/screens/movies/now-showing" />
+        {
+          isLoading?(
+            <MyLoading />
+          ):(
+            <div>
+              <ListMovie movies={movieNow} type = 'now' isListAll={false} />
+              <ShowMoreButton link="/screens/movies/now-showing" />
+            </div>
+          )
+        }
+        
         <div className="flex items-center justify-between mb-10 mt-13">
           <div>
             <h2 className="text-3xl font-bold font-serif">Sắp ra mắt</h2>

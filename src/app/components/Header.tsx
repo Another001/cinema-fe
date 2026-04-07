@@ -49,7 +49,7 @@ export default function Header() {
               <div className="bg-[#1a1a1a]/95 backdrop-blur-xl border border-yellow-500/20 rounded-2xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.5)]">
                 
                 {/* Lựa chọn: Xem vé */}
-                <Link href="/history" className="flex items-center gap-3 px-5 py-4 hover:bg-yellow-500/10 hover:text-yellow-500 transition-colors border-b border-white/5">
+                <Link href="/screens/user/my-ticket" className="flex items-center gap-3 px-5 py-4 hover:bg-yellow-500/10 hover:text-yellow-500 transition-colors border-b border-white/5">
                   <Ticket size={18} />
                   <span className="font-semibold">Xem vé của tôi</span>
                 </Link>

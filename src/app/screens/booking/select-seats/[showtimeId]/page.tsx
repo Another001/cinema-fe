@@ -11,10 +11,11 @@ import PaymentModal from './PaymentModal';
 import bookingApi from '@/src/api/booking';
 import { getCustomerInfo } from '@/src/utils/localStorage.utils';
 import { createReservationReqDto, createReservationResDto } from '@/src/types/Booking';
+import Loading from '../../../../components/Loading'
 
 
 const getSelectedSeatsForApi = (
-  selectedSeats: string[],                    // ["A1", "A5", "J10"]
+  selectedSeats: string[],                   
   seats: ShowtimeListSeatResDto[]
 ): { seatId: number }[] => {
   
@@ -39,7 +40,6 @@ export function calculateTotalPrice(
   let total = 0;
 
   for (const seatName of selectedSeatNames) {
-    // Tìm ghế trong danh sách ghế
     const seat = allSeats.find(s => s.seatName === seatName);
 
     if (seat) {
@@ -55,7 +55,6 @@ export function calculateTotalPrice(
 
 console.log(getCustomerInfo());
 
-const id = 24;
 export default function BookingPage({ params }: {params: Promise<{ showtimeId: number }>}) {
   const resolvedParams = use(params);
   const showtimeId = resolvedParams.showtimeId;
@@ -64,6 +63,7 @@ export default function BookingPage({ params }: {params: Promise<{ showtimeId: n
   const [showtimeDetail, setShowtimeDeatail] = useState<ShowtimeGetResDto>();
   const [reservation, setReservation] = useState<createReservationResDto>();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   React.useEffect(() => { 
     const getData = async () => {
       const data = await showtimeApi.listSeats(showtimeId ?? 0);
@@ -72,6 +72,7 @@ export default function BookingPage({ params }: {params: Promise<{ showtimeId: n
       const data2 = await showtimeApi.getShowtime(showtimeId);
       console.log('showtimedetail', data2);
       setShowtimeDeatail(data2);
+      setIsLoading(false);
     }
     getData();
   },[]);
@@ -105,16 +106,20 @@ export default function BookingPage({ params }: {params: Promise<{ showtimeId: n
         </div>
 
         <SeatLegend />
-
-        <SeatGrid 
-          selectedSeats={selectedSeats} 
-          onToggleSeat={(label) => {
-            setSelectedSeats(prev => 
-              prev.includes(label) ? prev.filter(s => s !== label) : [...prev, label]
-            );
-          }}
-          seats={seats} 
-        />
+        {isLoading?(
+          <Loading />
+        ):(
+          <SeatGrid 
+            selectedSeats={selectedSeats} 
+            onToggleSeat={(label) => {
+              setSelectedSeats(prev => 
+                prev.includes(label) ? prev.filter(s => s !== label) : [...prev, label]
+              );
+            }}
+            seats={seats} 
+          />
+        )}
+        
 
         <div className="bg-violet-500/10 border border-violet-500/20 rounded-2xl p-8 text-center max-w-sm mx-auto my-12 backdrop-blur-md">
           <p className="text-white/60 text-sm mb-1">Tổng tiền cần thanh toán</p>

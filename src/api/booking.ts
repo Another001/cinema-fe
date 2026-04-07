@@ -9,9 +9,8 @@ const bookingApi = {
   createReservation: (dto : createReservationReqDto) : Promise<createReservationResDto> =>{
     return apiInstance.post('Booking/Reservation', dto);
   },
-  confirmReservation: (showtimeId: number) => {
-    console.log("Duong linkkkk", `Booking/Confirm/${showtimeId}`)
-    return apiInstance.get(`Booking/Confirm/${showtimeId}`);
+  confirmReservation: (reservationId : number) => {
+    return apiInstance.get(`Booking/Confirm/${reservationId}`);
   }
 };
 

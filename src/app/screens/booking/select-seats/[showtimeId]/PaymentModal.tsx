@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+'use client'
+
+import { useState, useEffect } from 'react';
 import { X, Clock, CreditCard, ShieldCheck } from 'lucide-react';
 import { createReservationResDto } from '@/src/types/Booking';
 import bookingApi from '@/src/api/booking';
@@ -12,16 +14,16 @@ interface PaymentModalProps {
   reservation?: createReservationResDto
 }
 
-const handleConfirmReservation = async (showtimeId: number) => {
-  if (!showtimeId) {
-    alert("Thiếu thông tin showtime!");
+const handleConfirmReservation = async ({reservationId, onClose}:{reservationId: number, onClose: any}) => {
+  if (!reservationId) {
+    alert("Thiếu thông tin reservation!");
     return;
   }
-
   try {
-    const response = await bookingApi.confirmReservation(showtimeId);
+    const response = await bookingApi.confirmReservation(reservationId);
     alert("Success");
-    console.log("Reservation confirmed:", response.data);
+    console.log("Reservation confirmed:", response);
+    onClose();
   } catch (error: any) {
     console.error(error);
     
@@ -31,11 +33,12 @@ const handleConfirmReservation = async (showtimeId: number) => {
   }
 };
 
+
 export default function PaymentModal({ isOpen, onClose, movieTitle, seats, totalAmount, reservation }: PaymentModalProps) {
   const [timeLeft, setTimeLeft] = useState(120);
-
   useEffect(() => {
     if (!isOpen) return;
+    setTimeLeft(120);
     const timer = setInterval(() => {
       setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
     }, 1000);
@@ -113,7 +116,7 @@ export default function PaymentModal({ isOpen, onClose, movieTitle, seats, total
           </div>
 
           {/* Payment Button */}
-          <button onClick={() => handleConfirmReservation(reservation?.id?? 0)}
+          <button onClick={() => handleConfirmReservation({reservationId: reservation?.id?? 0, onClose: onClose})}
            className="w-full py-4 bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-400 hover:to-amber-500 text-black font-extrabold rounded-2xl flex items-center justify-center gap-3 transition-all active:scale-[0.98] shadow-lg shadow-yellow-500/20">
             <CreditCard size={20} />
             THANH TOÁN NGAY
