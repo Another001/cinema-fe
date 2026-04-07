@@ -1,9 +1,12 @@
 import apiInstance from "./apiInstance";
-import { CustomerFakeLoginReq, CustomerFakeLoginRes } from "../types/Customer";
+import { CustomerFakeLoginReq, CustomerFakeLoginRes, TicketGetRes } from "../types/Customer";
 
 const customerApi = {
   fakeLogin: ({phone}: CustomerFakeLoginReq) :Promise<CustomerFakeLoginRes> => {
     return apiInstance.post('Customer/login', {phone})
+  },
+  myTicket: (customerId : number) : Promise<TicketGetRes[]> => {
+    return apiInstance.get(`Customer/UserTickets/${customerId}`)
   }
 };
 

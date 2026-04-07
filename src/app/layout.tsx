@@ -29,18 +29,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="vi"
-      className={`${playfair.variable} ${outfit.variable} h-full antialiased`}
-    >
-      <body className="font-sans bg-[#0a0a0a] text-white overflow-x-hidden">
+    <html lang="vi">
+      <body className="bg-[#0a0a0a] text-white">
         <Header />
-        <main className="hero-bg relative min-h-screen flex flex-col">
-          <div className="hero-glow-container"></div>
-          <div className="relative z-10 flex-1">
-            {children}
-          </div>
-        </main>
+        {children}
       </body>
     </html>
   );

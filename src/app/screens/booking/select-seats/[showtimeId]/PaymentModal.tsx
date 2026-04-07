@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { X, Clock, CreditCard, ShieldCheck } from 'lucide-react';
 import { createReservationResDto } from '@/src/types/Booking';
 import bookingApi from '@/src/api/booking';
+import { useRouter } from 'next/navigation';
 
 interface PaymentModalProps {
   isOpen: boolean;
@@ -36,6 +37,7 @@ const handleConfirmReservation = async ({reservationId, onClose}:{reservationId:
 
 export default function PaymentModal({ isOpen, onClose, movieTitle, seats, totalAmount, reservation }: PaymentModalProps) {
   const [timeLeft, setTimeLeft] = useState(120);
+  const router = useRouter();
   useEffect(() => {
     if (!isOpen) return;
     setTimeLeft(120);
@@ -116,7 +118,7 @@ export default function PaymentModal({ isOpen, onClose, movieTitle, seats, total
           </div>
 
           {/* Payment Button */}
-          <button onClick={() => handleConfirmReservation({reservationId: reservation?.id?? 0, onClose: onClose})}
+          <button onClick={() => {handleConfirmReservation({reservationId: reservation?.id?? 0, onClose: onClose}); router.replace("/screens/user/my-ticket")}}
            className="w-full py-4 bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-400 hover:to-amber-500 text-black font-extrabold rounded-2xl flex items-center justify-center gap-3 transition-all active:scale-[0.98] shadow-lg shadow-yellow-500/20">
             <CreditCard size={20} />
             THANH TOÁN NGAY

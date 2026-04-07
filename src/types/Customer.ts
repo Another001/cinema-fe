@@ -7,3 +7,14 @@ export interface CustomerFakeLoginRes{
   name : string,
   phone : string,
 }
+
+export interface TicketGetRes{
+  movieName: string,
+  address: string,
+  roomName: string,
+  seatName: string,
+  createdAt: string,
+  beginAt: string,
+  seatPrice: number,
+  ticketSatus: string
+}

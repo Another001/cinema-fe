@@ -140,7 +140,7 @@ export default function BookingPage({ params }: {params: Promise<{ showtimeId: n
       <PaymentModal 
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        movieTitle="Dịch vụ giao hàng của phù thủy Kiki"
+        movieTitle={showtimeDetail?.movieName ?? ""}
         seats={selectedSeats}
         totalAmount={totalPrice}
         reservation={reservation}

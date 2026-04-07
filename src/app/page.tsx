@@ -7,6 +7,7 @@ import { MovieGetRes } from '../types/Movie';
 import ListMovie from './components/ListMovie';
 import Link from 'next/link';
 import MyLoading from './components/Loading'
+
 function ShowMoreButton({link}: {link : string}){
   return(
     <Link href = {link} className="flex justify-center items-center border border-gray-300 hover:border-yellow-500 rounded-lg my-10 py-2">
@@ -84,9 +85,15 @@ export default function HomePage() {
             <p className="text-gray-500 mt-1 text-sm">Những bom tấn sắp công chiếu</p>
           </div>
         </div>
-        <ListMovie movies={movieUpcoming} type = 'coming' isListAll={false} />
-        <ShowMoreButton link="/screens/movies/cooming-soon" />
-      </section>
+        {isLoading?(
+          <MyLoading />
+        ):(
+          <div>
+            <ListMovie movies={movieUpcoming} type = 'coming' isListAll={false} />
+            <ShowMoreButton link="/screens/movies/cooming-soon" />
+          </div>
+        )}
+          </section>
     </div>
   );
 }
