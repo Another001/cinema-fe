@@ -118,7 +118,7 @@ export default function PaymentModal({ isOpen, onClose, movieTitle, seats, total
           </div>
 
           {/* Payment Button */}
-          <button onClick={() => {handleConfirmReservation({reservationId: reservation?.id?? 0, onClose: onClose}); router.replace("/screens/user/my-ticket")}}
+          <button onClick={async() => {await handleConfirmReservation({reservationId: reservation?.id?? 0, onClose: onClose}); router.replace("/screens/user/my-ticket")}}
            className="w-full py-4 bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-400 hover:to-amber-500 text-black font-extrabold rounded-2xl flex items-center justify-center gap-3 transition-all active:scale-[0.98] shadow-lg shadow-yellow-500/20">
             <CreditCard size={20} />
             THANH TOÁN NGAY

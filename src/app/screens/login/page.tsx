@@ -5,6 +5,7 @@ import Link from 'next/link';
 import customerApi from '@/src/api/customer';
 import { CustomerFakeLoginReq } from '@/src/types/Customer';
 import { setCustomerInfo } from '@/src/utils/localStorage.utils';
+import { useRouter } from 'next/navigation';
 
 const handleLogin = async (
     { phone }: CustomerFakeLoginReq,
@@ -23,9 +24,10 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [phone, setPhone] = useState("");
   const [error, setError] = useState<string>("");
+  const router = useRouter();
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6">
+    <div className="hero-bg min-h-screen flex items-center justify-center p-6">
       <div className="film-grain" />
 
       <div className="relative z-10 w-full max-w-md">
@@ -84,7 +86,7 @@ export default function LoginPage() {
 
             {/* Submit Button */}
             <button className="w-full bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-400 hover:to-amber-500 text-black font-bold py-4 rounded-2xl shadow-lg shadow-yellow-500/20 flex items-center justify-center gap-2 group transition-all active:scale-[0.98] mt-4"
-              onClick={async () => {await handleLogin({phone: phone}, setError)}}
+              onClick={async () => {await handleLogin({phone: phone}, setError); router.replace('/')}}
             >
               Đăng nhập <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>

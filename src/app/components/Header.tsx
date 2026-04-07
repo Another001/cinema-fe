@@ -21,14 +21,14 @@ export default function Header() {
   };
 
   return (
-    <nav className="sticky top-0 z-[100] flex items-center hero-bg text-white justify-between px-12 py-5 border-b border-white/5">
+    <div className="sticky top-0 z-[100] flex items-center hero-bg text-white justify-between px-12 py-5 border-b border-white/5">
       {/* LOGO */}
-      <div className="flex items-center gap-3">
+      <Link className="flex items-center gap-3 relative z-20 group" href="/">
         <div className="w-10 h-10 rounded-lg bg-yellow-500 flex items-center justify-center shadow-[0_0_15px_rgba(234,179,8,0.4)]">
           <Clapperboard className="text-black" size={20} />
         </div>
         <span className="text-xl font-bold tracking-wider font-serif">STARLIGHT CINEMA</span>
-      </div>
+      </Link>
 
       {/* RIGHT NAVIGATION */}
       <div className="hidden md:flex items-center gap-8 text-sm font-medium">
@@ -79,6 +79,6 @@ export default function Header() {
           Đặt vé ngay
         </button>
       </div>
-    </nav>
+    </div>
   );
 }

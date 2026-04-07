@@ -15,7 +15,6 @@ export default function HistoryPage() {
       const user = await getCustomerInfo();
       if (!user?.id) return;
       setCustomer(user);
-      console.log('user khuc nay la ', user);
       try {
         const data = await customerApi.myTicket(user.id);
         setTickets(data);
@@ -26,7 +25,7 @@ export default function HistoryPage() {
     getData();
   }, []);
   return (
-    <div className="hero-bg text-white overflow-x-hidden">
+    <div className="hero-bg text-white">
       <div className="film-grain"></div>
       <main className="relative z-10 py-18">
         <div className="max-w-7xl mx-auto px-8">

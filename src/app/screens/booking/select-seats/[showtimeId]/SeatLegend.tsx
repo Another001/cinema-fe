@@ -1,12 +1,16 @@
 export default function SeatLegend() {
   const legendItems = [
     { 
-      label: "Còn trống", 
-      className: "bg-white/5 border-white/20" 
+      label: "Thường", 
+      className: "bg-white/5 border-green-300/70 border-2" 
     },
     { 
-      label: "Ghế bạn chọn", 
-      className: "bg-gradient-to-br from-yellow-500 to-amber-600 border-yellow-500" 
+      label: "VIP", 
+      className: "bg-white/5 border-yellow-300/70 border-2" 
+    },
+    { 
+      label: "Sweetbox", 
+      className: "bg-white/5 border-pink-300/70 border-2" 
     },
     { 
       label: "Đã bán", 

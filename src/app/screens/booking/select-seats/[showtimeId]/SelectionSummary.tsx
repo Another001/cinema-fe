@@ -4,7 +4,7 @@ export default function SelectionSummary({ showtime, cinema, seats, total }: Pro
   const items = [
     { label: 'Suất chiếu', value: showtime },
     { label: 'Rạp phim', value: cinema },
-    { label: 'Số ghế', value: seats.sort().join(', ') || '-' },
+    { label: 'Số ghế', value: seats.sort().join(', ').slice(0,30) || '-' },
     { label: 'Tổng tiền', value: `${total.toLocaleString('vi-VN')} ₫` },
   ];
 

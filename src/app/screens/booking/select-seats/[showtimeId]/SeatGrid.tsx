@@ -28,7 +28,11 @@ export default function SeatGrid({ selectedSeats, onToggleSeat, seats }: SeatGri
                   ? "bg-red-500/10 border-red-500/20 text-red-500/40 cursor-not-allowed"
                   : isSelected
                   ? "bg-gradient-to-br from-yellow-500 to-amber-600 border-yellow-500 text-black shadow-lg shadow-yellow-500/20 scale-110 z-10"
-                  : "bg-white/5 border-white/10 text-white/60 hover:border-yellow-500/50 hover:text-white"
+                  : seat.seatType=="Normal"
+                  ? "bg-white/5 border-green-300/70 border-2 text-white/60 hover:border-yellow-500/50 hover:text-white"
+                  : seat.seatType=="VIP"
+                  ? "bg-white/5 border-yellow-300/70 border-2 text-white/60 hover:border-yellow-500/50 hover:text-white"
+                  : "bg-white/5 border-pink-300/70 border-2 text-white/60 hover:border-yellow-500/50 hover:text-white"
               }
             `}
             title={`${seat.seatName} - ${seat.seatType}`}
@@ -36,10 +40,6 @@ export default function SeatGrid({ selectedSeats, onToggleSeat, seats }: SeatGri
             {/* Hiển thị tên ghế (A1, A2...) */}
             {seat.seatName}
 
-            {/* Hint nhỏ nếu là ghế VIP (Tùy chọn thêm) */}
-            {seat.seatType === "VIP" && !isReserved && !isSelected && (
-              <div className="absolute top-0 right-0 w-1.5 h-1.5 bg-yellow-500 rounded-bl-full opacity-50" />
-            )}
           </button>
         );
       })}
