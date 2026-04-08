@@ -11,7 +11,7 @@ interface Props {
 export default function SelectionSummary({ date, cinema, time, format }: Props) {
   const formattedDate = (() => {
     if (!date) {
-      return "Chá»n ngÃ y";
+      return "";
     }
 
     const parsedDate = parseISO(date);
@@ -22,7 +22,7 @@ export default function SelectionSummary({ date, cinema, time, format }: Props) 
 
   const formattedTime = (() => {
     if (!time) {
-      return "Chá»n giá»";
+      return "";
     }
 
     const parsedTime = parseISO(time);

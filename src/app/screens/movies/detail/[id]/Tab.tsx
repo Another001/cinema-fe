@@ -4,6 +4,18 @@ import { useState } from 'react';
 import { Star } from 'lucide-react';
 import { MovieGetRes } from '@/src/types/Movie';
 
+const getYouTubeEmbedUrl = (url: string) => {
+  if (!url) return "";
+  
+  // Regex này giúp lấy ID từ cả link watch?v= và link rút gọn youtu.be/
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+  const match = url.match(regExp);
+
+  return (match && match[2].length === 11) 
+    ? `https://www.youtube.com/embed/${match[2]}`
+    : url;
+};
+
 export default function MovieTabs({movie} : {movie?: MovieGetRes}) {
   const [activeTab, setActiveTab] = useState('details');
 
@@ -40,7 +52,7 @@ export default function MovieTabs({movie} : {movie?: MovieGetRes}) {
               (
                 <iframe
                 className="w-full h-full"
-                src={movie?.trailer}
+                src={getYouTubeEmbedUrl(movie?.trailer)}
                 allowFullScreen
                 />    
               ):

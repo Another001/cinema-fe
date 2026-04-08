@@ -1,10 +1,20 @@
 interface Props { showtime: string; cinema: string; seats: string[]; total: number; }
 
 export default function SelectionSummary({ showtime, cinema, seats, total }: Props) {
+  var seatText;
+  if(seats.length > 10){
+    seatText = `${seats.slice(0, 10).join(', ')}...`;
+  }
+  else if(seats.length > 0){
+    seatText = seats.slice(0, 10).join(', ');
+  }
+  else{
+    seatText = '-'
+  }
   const items = [
     { label: 'Suất chiếu', value: showtime },
     { label: 'Rạp phim', value: cinema },
-    { label: 'Số ghế', value: seats.sort().join(', ').slice(0,30) || '-' },
+    { label: 'Số ghế', value: seatText },
     { label: 'Tổng tiền', value: `${total.toLocaleString('vi-VN')} ₫` },
   ];
 

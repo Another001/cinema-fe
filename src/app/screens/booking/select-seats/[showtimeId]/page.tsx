@@ -12,6 +12,7 @@ import bookingApi from '@/src/api/booking';
 import { getCustomerInfo } from '@/src/utils/localStorage.utils';
 import { createReservationReqDto, createReservationResDto } from '@/src/types/Booking';
 import Loading from '../../../../components/Loading'
+import { useRouter } from 'next/navigation';
 
 
 const getSelectedSeatsForApi = (
@@ -32,7 +33,6 @@ export function calculateTotalPrice(
   allSeats: { seatName: string; seatType: string; isSeatEmpty: boolean }[]
 ): number {
 
-  // Tạo Map để tra cứu giá theo seatType (string)
   const priceMap = new Map(
     seatPrices.map(item => [item.seatType, item.price])
   );
@@ -41,7 +41,6 @@ export function calculateTotalPrice(
 
   for (const seatName of selectedSeatNames) {
     const seat = allSeats.find(s => s.seatName === seatName);
-
     if (seat) {
       const price = priceMap.get(seat.seatType);
       if (price !== undefined) {
@@ -49,13 +48,11 @@ export function calculateTotalPrice(
       }
     }
   }
-
   return total;
 }
 
-console.log(getCustomerInfo());
-
 export default function BookingPage({ params }: {params: Promise<{ showtimeId: number }>}) {
+  const router = useRouter();
   const resolvedParams = use(params);
   const showtimeId = resolvedParams.showtimeId;
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
@@ -79,6 +76,12 @@ export default function BookingPage({ params }: {params: Promise<{ showtimeId: n
   const totalPrice = calculateTotalPrice( selectedSeats,showtimeDetail?.seatPrices ?? [],seats);
   const seatIds = getSelectedSeatsForApi(selectedSeats, seats);
   console.log('seat idddd', seatIds);
+  const customerInfo = getCustomerInfo();
+  React.useEffect(() => {
+    if (!customerInfo) {
+      router.replace("/screens/login");
+    }
+  }, [customerInfo, router]);
 
   return (
     <div className="min-h-screen hero-bg text-white font-[family-name:var(--font-outfit)]">

@@ -9,12 +9,13 @@ import { useRouter } from 'next/navigation';
 
 const handleLogin = async (
     { phone }: CustomerFakeLoginReq,
-    setError: (msg: string) => void
+    setError: (msg: string) => void,
+    router: any
   ) => {
   try {
     const customer = await customerApi.fakeLogin({ phone });
-    alert("login successsss");
     setCustomerInfo(customer);
+    router.replace('/');
   } catch (ex) {
     setError("Đăng nhập thất bại");
   }
@@ -86,7 +87,7 @@ export default function LoginPage() {
 
             {/* Submit Button */}
             <button className="w-full bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-400 hover:to-amber-500 text-black font-bold py-4 rounded-2xl shadow-lg shadow-yellow-500/20 flex items-center justify-center gap-2 group transition-all active:scale-[0.98] mt-4"
-              onClick={async () => {await handleLogin({phone: phone}, setError); router.replace('/')}}
+              onClick={async () => {await handleLogin({phone: phone}, setError, router);}}
             >
               Đăng nhập <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>

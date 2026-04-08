@@ -17,12 +17,10 @@ interface PaymentModalProps {
 
 const handleConfirmReservation = async ({reservationId, onClose}:{reservationId: number, onClose: any}) => {
   if (!reservationId) {
-    alert("Thiếu thông tin reservation!");
     return;
   }
   try {
     const response = await bookingApi.confirmReservation(reservationId);
-    alert("Success");
     console.log("Reservation confirmed:", response);
     onClose();
   } catch (error: any) {

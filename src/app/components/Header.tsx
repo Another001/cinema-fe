@@ -69,15 +69,16 @@ export default function Header() {
             </div>
           </div>
         ) : (
-          <Link href="/login" className="text-gray-300 hover:text-yellow-500 transition">
+          <Link href="/screens/login" className="text-gray-300 hover:text-yellow-500 transition relative z-20">
             Đăng nhập
           </Link>
         )}
 
         {/* NÚT ACTION */}
-        <button className="px-6 py-2.5 rounded-full bg-yellow-500 text-black font-bold text-sm hover:scale-105 transition shadow-[0_0_20px_rgba(234,179,8,0.3)] active:scale-95">
+        <Link href="/screens/movies/now-showing"
+          className="px-6 py-2.5 rounded-full bg-yellow-500 text-black font-bold text-sm hover:scale-105 transition shadow-[0_0_20px_rgba(234,179,8,0.3)] active:scale-95 relative z-20">
           Đặt vé ngay
-        </button>
+        </Link>
       </div>
     </div>
   );

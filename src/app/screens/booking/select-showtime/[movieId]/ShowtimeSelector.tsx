@@ -19,7 +19,7 @@ interface Props {
   }) => void;
   showtimes?: ShowtimeListResDto[];
   selectedCinema: string | null;
-  setShowtimeId: () => void;
+  setShowtimeId: any;
 }
 
 export default function ShowtimeSelector({ selectedDate, selectedTime, onSelect, showtimes, selectedCinema, setShowtimeId }: Props) {

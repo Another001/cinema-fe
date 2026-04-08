@@ -17,7 +17,7 @@ export default function SeatGrid({ selectedSeats, onToggleSeat, seats }: SeatGri
 
         return (
           <button
-            key={seat.id} // Sử dụng ID từ database làm key
+            key={seat.id}
             disabled={isReserved}
             onClick={() => onToggleSeat(seat.seatName)}
             className={`
@@ -37,7 +37,6 @@ export default function SeatGrid({ selectedSeats, onToggleSeat, seats }: SeatGri
             `}
             title={`${seat.seatName} - ${seat.seatType}`}
           >
-            {/* Hiển thị tên ghế (A1, A2...) */}
             {seat.seatName}
 
           </button>
