@@ -3,16 +3,9 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --font-outfit: 'Outfit', sans-serif;
-  --font-playfair: 'Playfair Display', serif;
+  --gold-primary: #eab308;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -21,10 +14,13 @@
   }
 }
 
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@theme {
+  --font-playfair: var (--font-playfair);
+  --font-outfit: var (--font-outfit);
+  --font-bitcount: var (--font-bitcount);
+  --color-gold: #eab308;
+  --color-test-la: #ff00ff;
+}
 
 html {
   scrollbar-gutter: stable;        /* Ngăn layout shift */
@@ -42,10 +38,6 @@ body {
 #__next {
   height: 100%;
   overflow-y: auto;
-}
-
-:root {
-  --gold-primary: #eab308;
 }
 
 .hero-bg {
@@ -111,17 +103,4 @@ body {
 @keyframes shimmer {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
-}
-
-@import "tailwindcss";
-
-@theme {
-  /* Khai báo font serif cho tiêu đề */
-  --font-serif: var(--font-playfair), serif;
-  
-  /* Khai báo font sans cho nội dung */
-  --font-sans: var(--font-outfit), ui-sans-serif, system-ui;
-
-  /* Bạn có thể thêm màu sắc riêng cho dự án rạp phim ở đây */
-  --color-gold: #eab308;
-}
+} 
