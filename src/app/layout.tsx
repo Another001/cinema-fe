@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 // Thay đổi Geist thành Playfair_Display và Outfit
 import { Playfair_Display, Outfit } from "next/font/google";
 import "./globals.css";
-import Header from "./components/Header";
+import { AuthProvider } from "../context/AuthContext";
 
 // Font cho tiêu đề - Hỗ trợ Tiếng Việt cực chuẩn
 const playfair = Playfair_Display({
@@ -30,9 +30,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi">
-      <body className="bg-[#0a0a0a] text-white">
-        <Header />
-        {children}
+      <body className={`bg-[#0a0a0a] text-white ${playfair.variable} ${outfit.variable}`}>
+        <div className = "text-lg font-playfair text-red-500">Hellluuu</div>
+        <div className = "text-lg font-outfit text-black">Hellluuu</div>
+        <div className="text-lg font-serif">Hellluuu</div>
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
