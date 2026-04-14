@@ -38,6 +38,18 @@ export interface AdminShowtimeGroupByRoom{
   showtimes: ShowtimeGroupByCinema[]
 }
 
+export interface AdminCreateShowtimeReq{
+  movieId: number,
+  roomId: number,
+  beginAt: string,
+  endAt: string,
+  seatPrice: 
+    {
+      seatTypeId: number,
+      price: number
+    }[]
+}
+
 export interface ShowtimeListSeatResDto{
   id : number,
   seatName: string,

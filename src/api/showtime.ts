@@ -1,5 +1,5 @@
 import apiInstance from "./apiInstance";
-import { ShowtimeListReqDto, ShowtimeListResDto, ShowtimeListSeatResDto, ShowtimeGetResDto, AdminShowtimeGroupByCity } from "../types/Showtime";
+import { ShowtimeListReqDto, ShowtimeListResDto, ShowtimeListSeatResDto, ShowtimeGetResDto, AdminShowtimeGroupByCity, AdminCreateShowtimeReq } from "../types/Showtime";
 
 const showtimeApi = {
   listShowtime: ({ movieId, beginAt }: ShowtimeListReqDto): Promise<ShowtimeListResDto[]> => {
@@ -16,6 +16,11 @@ const showtimeApi = {
         beginAt,
         city
       }
+    })
+  },
+  adminCreateShowtime:({movieId, roomId, beginAt, endAt, seatPrice}: AdminCreateShowtimeReq): Promise<AdminCreateShowtimeReq> => {
+    return apiInstance.post('Showtime', {
+      movieId, roomId, beginAt, endAt, seatPrice
     })
   },
   listSeats: (showtimeId: number) : Promise<ShowtimeListSeatResDto[]> =>{
