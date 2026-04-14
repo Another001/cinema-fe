@@ -18,8 +18,24 @@ export interface ShowtimeGroupByCity{
 }
 
 export interface ShowtimeListReqDto{
-  movieId: number,
+  movieId?: number,
   beginAt: string,
+  city?:string
+}
+
+export interface AdminShowtimeGroupByCity{
+  cityName: string,
+  cinemas: AdminShowtimeGroupByCinema[]
+}
+
+export interface AdminShowtimeGroupByCinema{
+  cinemaAdress: string,
+  rooms: AdminShowtimeGroupByRoom[]
+}
+
+export interface AdminShowtimeGroupByRoom{
+  roomName: string,
+  showtimes: ShowtimeGroupByCinema[]
 }
 
 export interface ShowtimeListSeatResDto{

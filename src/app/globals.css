@@ -15,9 +15,9 @@
 }
 
 @theme {
-  --font-playfair: var (--font-playfair);
-  --font-outfit: var (--font-outfit);
-  --font-bitcount: var (--font-bitcount);
+  --font-playfair: var(--font-playfair);
+  --font-outfit: var(--font-outfit);
+  --font-bitcount: var(--font-bitcount);
   --color-gold: #eab308;
   --color-test-la: #ff00ff;
 }
@@ -57,6 +57,21 @@ body {
   animation: drift 20s ease-in-out infinite;
 }
 
+@layer components {
+  .input-style {
+    @apply p-3.5 
+    bg-slate-900/60 
+    border border-slate-400/20 
+    rounded-xl 
+    text-slate-200 
+    text-sm 
+    focus:outline-none 
+    focus:border-purple-500/50 
+    focus:ring-4 
+    focus:ring-purple-500/10 
+    transition-all;
+  }
+}
 @keyframes drift {
   0%, 100% { transform: translate(0, 0) rotate(0deg); }
   50% { transform: translate(-2%, 1%) rotate(1deg); }

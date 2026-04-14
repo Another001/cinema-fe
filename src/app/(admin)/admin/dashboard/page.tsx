@@ -1,20 +1,24 @@
-import AdminHeader from "@/src/components/admin/AdminHeader";
+'use client'
+
+import NavBar from "../../../../components/admin/NavBar"
+import { useState } from "react"
 
 export default function Page() {
+  const [tab, setTab] = useState<"Dashboard" | "Showtime" | "Movie">("Dashboard");
   return(
-    <div className="
-    relative overflow-hidden bg-[linear-gradient(135deg,#0f172a_0%,#1e293b_25%,#0f172a_50%,#1a1a2e_75%,#0f172a_100%)]
-    before:content-[''] 
-    before:absolute 
-    before:top-[-50%] 
-    before:left-[-50%] 
-    before:w-[200%] 
-    before:h-[200%]
-    before:bg-[radial-gradient(ellipse_at_30%_50%,rgba(168,85,247,0.08)_0%,transparent_50%),radial-gradient(ellipse_at_70%_20%,rgba(56,189,248,0.06)_0%,transparent_40%)]
-    before:animate-[drift_20s_ease-in-out_infinite]
-    min-h-screen
-    ">
-      <AdminHeader />
+    <div className="relative z-10 flex-1 py-8 min-h-screen">
+      <div className="max-w-7xl mx-auto px-8">
+        <div className="bg-[linear-gradient(135deg,rgba(168,85,247,0.1),rgba(56,189,248,0.05))] border-1 border-[linear-gradient(135deg,rgba(168,85,247,0.1),rgba(56,189,248,0.05))] rounded-3xl 
+            p-10 
+            mb-8 
+            backdrop-blur-md">
+          <div className="font-playfair mb-2 text-[1.5rem] font-[800] text-white">
+            Chào mừng trở lại, Admin!
+          </div>
+          <div className="text-[0.95rem] bg-[rgba(226, 232, 240, 0.6)] mb-6 text-white font-playfair">Quản lý rạp phim, vé và thống kê doanh thu của bạn tại đây.</div>
+          <NavBar tab = {tab} setTab={setTab}/>
+        </div>
+      </div>
     </div>
   )
 }

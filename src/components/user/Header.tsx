@@ -20,7 +20,7 @@ export default function Header() {
         <div className="w-10 h-10 rounded-lg bg-yellow-500 flex items-center justify-center shadow-[0_0_15px_rgba(234,179,8,0.4)]">
           <Clapperboard className="text-black" size={20} />
         </div>
-        <span className="text-xl font-bold tracking-wider font-serif">STARLIGHT CINEMA</span>
+        <span className="text-xl font-bold tracking-wider font-playfair">STARLIGHT CINEMA</span>
       </Link>
 
       {/* RIGHT NAVIGATION */}
