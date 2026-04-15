@@ -1,5 +1,5 @@
 import apiInstance from "./apiInstance";
-import { MovieGetRes } from "../types/Movie";
+import { MovieCreateReq, MovieGetRes } from "../types/Movie";
 
 const movieApi = {
   getNowMovie: () : Promise<MovieGetRes[]> => {
@@ -10,6 +10,9 @@ const movieApi = {
   },
   getDetailMovie: (id : number) : Promise<MovieGetRes> => {
     return apiInstance.get(`Movie/${id}`);
+  },
+  createMovie:(movie : MovieCreateReq) => {
+    return apiInstance.post('Movie', movie)
   }
 };
 

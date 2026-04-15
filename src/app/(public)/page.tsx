@@ -32,7 +32,7 @@ export default function HomePage() {
         console.log('my dataaaaa', movienow);
         setIsLoading(false);
       } catch (err) {
-        setError(err.message);
+        setError(err as string);
       }
     }
     getData();
@@ -65,7 +65,7 @@ export default function HomePage() {
 
       <section id="phim" className="relative z-10 px-12 pb-20">
         <div className="flex items-center justify-between mb-10">
-          <h2 className="text-3xl font-bold font-serif">Phim đang chiếu</h2>
+          <h2 className="text-3xl font-bold font-playfair">Phim đang chiếu</h2>
           <p className="text-gray-500 mt-1 text-sm">Những bộ phim hot nhất tại rạp</p>
         </div>
         {
@@ -81,7 +81,7 @@ export default function HomePage() {
         
         <div className="flex items-center justify-between mb-10 mt-13">
           <div>
-            <h2 className="text-3xl font-bold font-serif">Sắp ra mắt</h2>
+            <h2 className="text-3xl font-bold font-playfair">Sắp ra mắt</h2>
             <p className="text-gray-500 mt-1 text-sm">Những bom tấn sắp công chiếu</p>
           </div>
         </div>

@@ -12,3 +12,18 @@ export interface MovieGetRes{
   language? : string,
   trailer?:string,
 }
+
+export interface MovieCreateReq{
+  name: string,
+  title: string,
+  describe:string,
+  duration: number,
+  releaseDate: string,
+  endDate: string,
+  genre: string,
+  director: string,
+  cast: string,
+  figure: string,
+  language:string,
+  trailer:string,
+}
