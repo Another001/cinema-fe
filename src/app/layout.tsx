@@ -18,12 +18,6 @@ const outfit = Outfit({
   weight: ["300", "400", "500", "600", "700", "800", "900"],
 });
 
-const bitcount = Bitcount({
-  variable: "--font-bitcount",
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"]
-})
-
 export const metadata: Metadata = {
   title: "Starlight Cinema",
   description: "Hệ thống đặt vé xem phim chuyên nghiệp",
@@ -36,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi">
-      <body className={`${playfair.variable} ${outfit.variable} ${bitcount.variable}`}>
+      <body className={`${playfair.variable} ${outfit.variable}`}>
         <AuthProvider>
           {children}
         </AuthProvider>

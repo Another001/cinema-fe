@@ -1,29 +1,25 @@
 'use client'
 
-import { Ticket, Info, User, Inbox } from 'lucide-react';
+import {Inbox } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import BookingCard from './BookingCard';
+import { adminGetShowtime } from '@/src/types/Booking';
+import bookingApi from '@/src/api/booking';
+import { useParams } from 'next/navigation';
 
-// Dữ liệu mẫu (Sample data)
-const allBookings = [
-  {
-    customer_name: "Nguyễn Văn A",
-    phone: "0912345678",
-    tickets: [
-      { seat: "A1", status: "confirmed", booking_date: "15/01/2024", price: 150000 },
-      { seat: "A2", status: "confirmed", booking_date: "15/01/2024", price: 150000 }
-    ]
-  },
-  {
-    customer_name: "Trần Thị B",
-    phone: "0987654321",
-    tickets: [
-      { seat: "B5", status: "pending", booking_date: "14/01/2024", price: 150000 },
-      { seat: "B6", status: "confirmed", booking_date: "14/01/2024", price: 150000 }
-    ]
-  }
-];
 
 export default function CheckBookingsPage() {
+  const [reservations, setReservations] = useState<adminGetShowtime[]>([]);
+  const param = useParams();
+  useEffect(() => {
+    const getData = async () => {
+      console.log("My param", param)
+      const data = await bookingApi.adminGetShowtime(Number(param.showtimeId))
+      console.log("my dataaa",data);
+      setReservations(data);
+    }
+    getData();
+  },[])
   return (
     <div className="min-h-screen bg-[#0f172a] text-white relative overflow-hidden font-sans">
 
@@ -40,15 +36,18 @@ export default function CheckBookingsPage() {
 
           {/* Booking List */}
           <div className="grid gap-6">
-            {allBookings.length > 0 ? (
-              allBookings.map((customer, index) => (
-                <BookingCard 
+            {reservations.length > 0 ? (
+              reservations.map((customer, index) => {
+                return(
+                <BookingCard
                   key={index}
-                  customerName={customer.customer_name}
-                  phone={customer.phone}
-                  tickets={customer.tickets}
+                  customerName={customer.customerName}
+                  phone={customer.customerPhone}
+                  createdAt={customer.createdAt}
+                  isConfirm={customer.isConfirm}
+                  tickets={customer.customerReservation}
                 />
-              ))
+              )})
             ) : (
               <div className="text-center py-20 bg-slate-800/40 rounded-[1.5rem] border border-slate-400/10 backdrop-blur-sm">
                 <Inbox className="w-16 h-16 mx-auto mb-4 text-slate-600 opacity-50" />

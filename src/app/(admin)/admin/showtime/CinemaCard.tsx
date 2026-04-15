@@ -1,6 +1,7 @@
 import { MapPin, Ticket, DoorOpen } from 'lucide-react';
 import { ShowtimeCard } from './ShowtimeCard';
 import { AdminShowtimeGroupByCity } from '@/src/types/Showtime';
+import Link from 'next/link';
 
 
 export default function CinemaCard  (showtimes : AdminShowtimeGroupByCity) 
@@ -29,9 +30,9 @@ export default function CinemaCard  (showtimes : AdminShowtimeGroupByCity)
               </div>
             </div>
             {room?.showtimes?.map((showtime => (
-              <div className="flex flex-col gap-3" key = {showtime.id}>
+              <Link className="flex flex-col gap-3" key = {showtime.id} href={`showtime/detail/${showtime.id}`}>
                 <ShowtimeCard showtime = {showtime} />
-              </div>
+              </Link>
             )))
             }
           </div>
@@ -39,7 +40,6 @@ export default function CinemaCard  (showtimes : AdminShowtimeGroupByCity)
         }
       </div>
     )))
-      
     }
   </div>
 )};

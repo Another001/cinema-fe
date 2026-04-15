@@ -6,6 +6,8 @@ import {useState, useEffect} from 'react';
 import showtimeApi from '@/src/api/showtime';
 import { AdminShowtimeGroupByCity } from '@/src/types/Showtime';
 import MyLoading from '@/src/components/Loading';
+import { Plus } from 'lucide-react';
+import Link from 'next/link';
 
 export default function SchedulePage() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -18,24 +20,24 @@ export default function SchedulePage() {
       if(!date || !city){
         return;
       }
-    try{
-      const data = await showtimeApi.adminListShowtime({beginAt: date, city: city});
-      setShowtimes(data);
-      console.log(data);
-    }
-    catch{
-    }
-    finally{
-      setLoading(false);
-    }
+      try{
+        const data = await showtimeApi.adminListShowtime({beginAt: date, city: city});
+        setShowtimes(data);
+        console.log(data);
+      }
+      catch{
+      }
+      finally{
+        setLoading(false);
+      }
     }
     getData();
   },[date, city])
 
   console.log("bine truynen vao show time", showtimes[0])
   return (
-    <div className="min-h-screen schedule-bg text-white overflow-x-hidden font-['Outfit']">
-      <div className="film-grain"></div>
+    <div className="min-h-screen text-white overflow-x-hidden font-['Outfit']">
+    
 
       <main className="relative z-10 max-w-7xl mx-auto px-8 py-12">
         {/* Page Header */}
@@ -43,32 +45,40 @@ export default function SchedulePage() {
           <h1 className="font-playfair text-5xl font-black font-bold text-slate-200 mb-2">Lịch Chiếu Phim</h1>
           <p className="text-slate-400/70 text-lg">Chọn ngày để xem lịch chiếu phim tại các rạp của chúng tôi</p>
         </div>
-
-        <div className='flex gap-12'>
-          <div className="bg-slate-800/50 border border-slate-400/15 rounded-3xl p-6 backdrop-blur-md mb-12 max-w-xs">
-            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2"> Chọn ngày </label>
-            <input type="date" 
-              className="w-full bg-slate-900/60 border border-slate-400/20 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-purple-500/50 transition-colors" 
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              /> 
+        <div className='flex justify-between items-center'>
+          <div className='flex gap-12'>
+            <div className="bg-slate-800/50 border border-slate-400/15 rounded-3xl p-6 backdrop-blur-md mb-12 max-w-xs">
+              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2"> Chọn ngày </label>
+              <input type="date" 
+                className="w-full bg-slate-900/60 border border-slate-400/20 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-purple-500/50 transition-colors" 
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                /> 
+            </div>
+            {/* City Filter */}
+            <div className="bg-slate-800/50 border border-slate-400/15 rounded-3xl p-6 backdrop-blur-md mb-12 max-w-xs text-whiten px-10">
+              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">
+                Chọn thành phố
+              </label>
+              <select
+                className="w-full font-outfit bg-slate-900/60 border border-slate-400/20 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-purple-500/50 transition-colors"
+                onChange={(e) => setCity(e.target.value)}
+                value={city}
+              >
+                <option value="Ha Noi">Hà Nội</option>
+                <option value="Ho Chi Minh">Hồ Chí Minh</option>
+              </select>
+            </div>
           </div>
-
-          {/* City Filter */}
-          <div className="bg-slate-800/50 border border-slate-400/15 rounded-3xl p-6 backdrop-blur-md mb-12 max-w-xs text-whiten px-10">
-            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">
-              Chọn thành phố
-            </label>
-            <select
-              className="w-full font-outfit bg-slate-900/60 border border-slate-400/20 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-purple-500/50 transition-colors"
-              onChange={(e) => setCity(e.target.value)}
-              value={city}
+          <div className='flex justify-between'>
+            <Link className='flex justify-between items-center font-outfit gap-3 pl-2 ml-3 pr-5 py-4 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 hover hover:text-pink-400'
+              href="/admin/create-showtime"
             >
-              <option value="Ha Noi">Hà Nội</option>
-              <option value="Ho Chi Minh">Hồ Chí Minh</option>
-            </select>
+              <Plus className='w-8 h-8' />
+              <div className='font-outfit text-xl'>Thêm suất chiếu</div>
+            </Link>
           </div>
-        </div>
+        </div>  
 
         {/* City Section */}
         <section className="mb-16">
