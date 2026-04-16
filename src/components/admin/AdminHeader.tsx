@@ -1,8 +1,12 @@
+'use client'
+
 import { Clapperboard, Settings, LogOut } from "lucide-react";
 import Link from "next/link";
+import { useAuthContext } from "@/src/context/AuthContext"
 
 
 export default function AdminHeader(){
+  const {logoutSuccess} = useAuthContext();
   return(
     <div className="border-b-2 border-[rgba(148,163,184,0.1)] bg-[rgba(15,23,42,0.5)] relative z-20 p-4">
       <div className="max-w-7xl mx-auto px-8 flex items-center justify-between">
@@ -21,9 +25,10 @@ export default function AdminHeader(){
           <div className="w-10 h-10 rounded-lg bg-slate-700/50 hover:bg-slate-600 flex items-center justify-center transition">
             <Settings className="w-5 h-5 text-white"></Settings>
           </div>
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
+          <button onClick={logoutSuccess}
+            className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
             <LogOut className="w-5 h-5 text-white hover:text-red-400"></LogOut>
-          </div>
+          </button>
         </div>
       </div>
     </div>

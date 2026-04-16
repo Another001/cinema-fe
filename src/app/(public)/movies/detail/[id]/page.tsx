@@ -25,19 +25,11 @@ export default function Page({ params }: {params: Promise<{ id: number }>}) {
 
       <main className="relative z-10 flex-1 py-12">
         <div className="max-w-7xl mx-auto px-8">
-          {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-white/60 mb-8">
-            <a href="#" className="hover:text-white transition">Trang chủ</a>
-            <span>/</span>
-            <span className="text-white">Nội Dung Phim</span>
-          </nav>
-
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] items-start">
             <div className="flex flex-col justify-center w-92 aspect-[3/4] rounded-3xl overflow-hidden border border-yellow-500/20 shadow-2xl relative group">
               <img src = {movieDetail?.figure} alt="figure" className="w-full h-full object-cover"/>
             </div>
 
-            {/* Info */}
             <MovieInfo movie={movieDetail}/>
           </div>
 

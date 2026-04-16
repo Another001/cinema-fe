@@ -9,17 +9,23 @@ type AuthContextType = {
   setUser: React.Dispatch<React.SetStateAction<any>>
   loginSuccess : any
   logoutSuccess : any
+  isLoading: boolean,
+  setIsLoading: any
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({children} : {children :ReactNode}) => {
   const [user, setUser] = useState<any>();
-  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true); // Mặc định là đang load
   useEffect(() => {
-    const userInfo = getCustomerInfo();
-    setUser(userInfo)
-  },[])
+    const savedUser = getCustomerInfo();
+    if (savedUser) {
+      setUser(savedUser);
+    }
+    setIsLoading(false); // Đã kiểm tra xong (dù có user hay không)
+  }, []);
+  const router = useRouter();
   const loginSuccess = (user : any) => {
     setCustomerInfo(user);
     setUser(user);
@@ -30,7 +36,7 @@ export const AuthProvider = ({children} : {children :ReactNode}) => {
     router.push('/login')
   }
   return (
-    <AuthContext.Provider value={{user, setUser, loginSuccess, logoutSuccess}}>
+    <AuthContext.Provider value={{user, setUser, loginSuccess, logoutSuccess, isLoading, setIsLoading}}>
       {children}
     </AuthContext.Provider>
   )

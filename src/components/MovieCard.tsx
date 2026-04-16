@@ -12,7 +12,6 @@ interface MovieProps {
 }
 
 export default function MovieCard({id, name, genre, duration, releaseDate, type, figure }: MovieProps) {
-  console.log("prop co giiiii",{ name, genre, duration, releaseDate, type, figure } )
   return (
     <Link href = {`/movies/detail/${id}`} >
     <div className="group rounded-2xl overflow-hidden border border-white/5 bg-white/[0.02] cursor-pointer transition-all duration-400 hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(139,92,246,0.2)] min-h-[450] max-w-[400]">

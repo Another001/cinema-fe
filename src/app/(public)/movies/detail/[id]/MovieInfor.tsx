@@ -1,5 +1,5 @@
 // components/MovieInfo.tsx
-import { Star, Ticket, Bell, Share2 } from 'lucide-react';
+import { Star, Ticket, Bell} from 'lucide-react';
 import { MovieGetRes } from '@/src/types/Movie';
 import { useRouter } from 'next/navigation';
 
@@ -26,7 +26,7 @@ export default function MovieInfo({movie} : {movie?: MovieGetRes}) {
   const router = useRouter();
   return (
     <div className="flex flex-col">
-      <h1 className="text-3xl md:text-4xl font-black font-serif mb-6 leading-tight text-white">
+      <h1 className="text-3xl md:text-4xl font-black font-serif mb-6 leading-tight text-white font-outfit">
         {movie?.name}
       </h1>
       <p className="text-white/80 leading-relaxed mb-8 text-lg">

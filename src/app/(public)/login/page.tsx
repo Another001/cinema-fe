@@ -7,27 +7,31 @@ import { CustomerFakeLoginReq } from '@/src/types/Customer';
 import { useRouter } from 'next/navigation';
 import { useAuthContext } from '@/src/context/AuthContext';
 
-const handleLogin = async (
-    { phone }: CustomerFakeLoginReq,
-    setError: (msg: string) => void,
-    loginSuccess: any,
-    router: any
-  ) => {
-  try {
-    const customer = await customerApi.fakeLogin({ phone });
-    loginSuccess(customer);
-    router.replace('/');
-  } catch (ex) {
-    setError("Đăng nhập thất bại");
-  }
-};
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [phone, setPhone] = useState("");
   const [error, setError] = useState<string>("");
+  const [password, setPassword] = useState("")
   const router = useRouter();
-  const { loginSuccess } = useAuthContext();
+  const { loginSuccess , user} = useAuthContext();
+  const handleLogin = async (
+      { phone, password}: CustomerFakeLoginReq,
+    ) => {
+    try {
+      const customer = await customerApi.fakeLogin({ phone, password });
+      loginSuccess(customer);
+      console.log("customer infor", customer.name)
+      if(customer.name == "Admin")
+        router.replace('/admin/dashboard')
+      else{
+        router.replace('/');
+      }
+
+    } catch (ex) {
+      setError("Đăng nhập thất bại");
+    }
+  };
 
   return (
     <div className="hero-bg min-h-screen flex items-center justify-center p-6">
@@ -75,6 +79,8 @@ export default function LoginPage() {
                 <input 
                   type={showPassword ? "text" : "password"} 
                   placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-12 text-white placeholder:text-white/20 focus:outline-none focus:border-yellow-500/50 focus:ring-1 focus:ring-yellow-500/50 transition-all"
                 />
                 <button 
@@ -89,7 +95,7 @@ export default function LoginPage() {
 
             {/* Submit Button */}
             <button className="w-full bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-400 hover:to-amber-500 text-black font-bold py-4 rounded-2xl shadow-lg shadow-yellow-500/20 flex items-center justify-center gap-2 group transition-all active:scale-[0.98] mt-4"
-              onClick={async () => {await handleLogin({phone: phone}, setError, loginSuccess, router);}}
+              onClick={async () => {await handleLogin({phone: phone, password: password})}}
             >
               Đăng nhập <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>

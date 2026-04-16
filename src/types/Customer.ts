@@ -1,5 +1,6 @@
 export interface CustomerFakeLoginReq{
-  phone : string
+  phone : string,
+  password: string
 }
 
 export interface CustomerFakeLoginRes{

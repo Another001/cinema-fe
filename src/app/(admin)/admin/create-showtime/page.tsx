@@ -11,19 +11,9 @@ import { CityListRes } from '@/src/types/Cinema';
 import { addMinutes, format, parse } from 'date-fns';
 import { combineToISO } from '@/src/utils/formatDate';
 import { AdminCreateShowtimeReq } from '@/src/types/Showtime';
+import MyLoading from '@/src/components/Loading';
+import { useRouter } from 'next/navigation';
 
-
-const handleSubmit = async ({movieId, roomId, beginAt, endAt, seatPrice} : AdminCreateShowtimeReq) => {
-  const payload = {movieId, roomId, beginAt, endAt, seatPrice};
-  console.log("my payloadddd", payload)
-  try{
-    await showtimeApi.adminCreateShowtime(payload);
-    alert("Tao suat chieu thanh cong")
-  }
-  catch{
-    alert("Tao suat chieu that bai");
-  }
-}
 
 export default function AddShowtime() {
   const [movies, setMovies] = useState<MovieGetRes[]>([]);
@@ -38,22 +28,45 @@ export default function AddShowtime() {
   const [normalPrice, setNormalPrice] = useState<number>(100000);
   const [vipPrice, setVipPrice] = useState<number>(150000);
   const [sweetBoxPrice, setSweetBoxPrice] = useState<number>(250000);
+  const[loading, setLoading] = useState<boolean>(false)
+  const router = useRouter();
 
   useEffect(() => {
+    setLoading(true)
     const getData = async () => {
       const data = await cinemaApi.listCity();
-      console.log("cityy",data);
       setCity(data);
       const data2 = await movieApi.getNowMovie();
-      console.log("movie",data2);
-      setMovies(data2);
+      setMovies(data2)
     }
     getData();
+    setLoading(false)
   },[])
   const cinemaList = useMemo(() => city.find(x => x.city == selectedCity), [selectedCity]);
   const roomList = useMemo(() => cinemaList?.cinemas.find(x => x.address == selectedCinema),[selectedCinema]);
+  const handleSubmit = async ({movieId, roomId, beginAt, endAt, seatPrice} : AdminCreateShowtimeReq) => {
+    const payload = {movieId, roomId, beginAt, endAt, seatPrice};
+    console.log("payload", payload)
+    setLoading(true)
+    try{
+      await showtimeApi.adminCreateShowtime(payload);
+      alert("Tao suat chieu thanh cong")
+      router.push("/admin/showtime")
+    }
+    catch(ex){
+      alert(`Tao suat chieu that bai ${ex?.response.data}`)
+    }
+    finally{
+      setLoading(false)
+    }
+  }
+  if(loading){
+    return <div className="min-h-screen bg-[#0f172a] text-white relative overflow-hidden font-sans min-h-screen">
+        <MyLoading />
+        </div>
+  }
   return (
-    <div className="min-h-screen bg-[#0f172a] text-white relative overflow-hidden font-sans">
+    <div className="min-h-screen bg-[#0f172a] text-white relative overflow-hidden font-sans min-h-screen">
       {/* Background Animation & Effects */}
       <div className="absolute inset-[-50%] w-[200%] h-[200%] bg-[radial-gradient(ellipse_at_30%_50%,rgba(168,85,247,0.08)_0%,transparent_50%),radial-gradient(ellipse_at_70%_20%,rgba(56,189,248,0.06)_0%,transparent_40%)] animate-[drift_20s_ease-in-out_infinite]" />
       <main className="relative z-10 py-12 px-8">
@@ -147,18 +160,26 @@ export default function AddShowtime() {
                 <input 
                   type="time" 
                   className="input-style"
+                  // Lấy trực tiếp từ chuỗi trong state (vì state giờ đã lưu đúng giờ local)
                   value={beginAt ? beginAt.split('T')[1].substring(0, 5) : ""}
                   onChange={(e) => {
                     if(!selectedDate){
-                      alert("Vui long chon ngay chieu truoc");
-                      return
+                      alert("Vui lòng chọn ngày chiếu trước");
+                      return;
                     }
-                    const beginDate = combineToISO(selectedDate || "2026-01-01", e.target.value)
-                    setBeginAt(beginDate);
-                    const endTimeDate = addMinutes(beginDate, selectedMovie?.duration || 30);
-                    const isoEnd = format(endTimeDate, "yyyy-MM-dd'T'HH:mm:ss");
-                    setEndAt(isoEnd);
-                }}
+                    
+                    const beginDate = combineToISO(selectedDate, e.target.value);
+                    if (beginDate) {
+                      // KHÔNG dùng toISOString(), dùng format để giữ nguyên giờ bạn chọn
+                      const localISO = format(beginDate, "yyyy-MM-dd'T'HH:mm:ss");
+                      setBeginAt(localISO);
+
+                      // Tính toán endAt
+                      const duration = selectedMovie?.duration || 30;
+                      const endTimeDate = addMinutes(beginDate, duration);
+                      setEndAt(format(endTimeDate, "yyyy-MM-dd'T'HH:mm:ss"));
+                    }
+                  }}
                 />
               </div>
 
@@ -170,10 +191,14 @@ export default function AddShowtime() {
                   value={endAt ? endAt.split('T')[1].substring(0, 5) : ""}
                   onChange={(e) => {
                     if(!selectedDate){
-                      alert("Vui long chon ngay chieu truoc");
-                      return
+                      alert("Vui lòng chọn ngày chiếu trước");
+                      return;
                     }
-                    setEndAt(format(combineToISO(selectedDate || "2026-01-01", e.target.value),"yyyy-MM-dd'T'HH:mm:ss"));
+                    const endDate = combineToISO(selectedDate, e.target.value);
+                    if (endDate) {
+                      // Giữ nguyên giờ local vào state
+                      setEndAt(format(endDate, "yyyy-MM-dd'T'HH:mm:ss"));
+                    }
                   }}
                 />
               </div>

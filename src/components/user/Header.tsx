@@ -55,6 +55,11 @@ export default function Header() {
                   <LogOut size={18} />
                   <span className="font-semibold">Đăng xuất</span>
                 </button>
+                {user.name == "Admin" && (
+                  <Link href="/admin/dashboard" className="flex items-center gap-3 px-5 py-4 hover:bg-yellow-500/10 hover:text-yellow-500 transition-colors border-b border-white/5">
+                    Quay lại trang Admin
+                  </Link>
+                )}
               </div>
               
               {/* Miếng đệm để không bị mất hover khi di chuột từ tên xuống menu */}

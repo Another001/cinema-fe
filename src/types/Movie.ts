@@ -11,6 +11,13 @@ export interface MovieGetRes{
   title?: string,
   language? : string,
   trailer?:string,
+  comments: CommentGetRes[]
+}
+
+export interface CommentGetRes{
+  customerName: string,
+  comment: string,
+  createdAt: string,
 }
 
 export interface MovieCreateReq{

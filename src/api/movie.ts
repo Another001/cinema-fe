@@ -13,6 +13,9 @@ const movieApi = {
   },
   createMovie:(movie : MovieCreateReq) => {
     return apiInstance.post('Movie', movie)
+  },
+  createComment:({movieId, customerId, comment}: {movieId: number, customerId: number, comment: string}) => {
+    return apiInstance.post('Movie/comment', {movieId, customerId, comment})
   }
 };
 

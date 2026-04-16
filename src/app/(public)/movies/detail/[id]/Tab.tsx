@@ -1,8 +1,11 @@
 // components/MovieTabs.tsx
 'use client';
 import { useState } from 'react';
-import { Star } from 'lucide-react';
 import { MovieGetRes } from '@/src/types/Movie';
+import {format} from 'date-fns'
+import { SendHorizonal } from 'lucide-react';
+import { useAuthContext } from '@/src/context/AuthContext';
+import movieApi from '@/src/api/movie';
 
 const getYouTubeEmbedUrl = (url: string) => {
   if (!url) return "";
@@ -18,7 +21,23 @@ const getYouTubeEmbedUrl = (url: string) => {
 
 export default function MovieTabs({movie} : {movie?: MovieGetRes}) {
   const [activeTab, setActiveTab] = useState('details');
+  const [comment, setComment] = useState<string>();
+  const {user} = useAuthContext();
+  const handleComment = async () =>{
+    if(!user){
+      alert("Bạn phải đăng nhập để bình luận")
+      return
+    }
+    if(!comment)
+      return
+    try{
+      await movieApi.createComment({movieId : movie?.id || 0, customerId: user.id, comment: comment});
+      setComment("");
+    }
+    catch{
 
+    }
+  }
   return (
     <div className="mt-12">
       <div className="flex border-b border-white/5 mb-8">
@@ -38,7 +57,7 @@ export default function MovieTabs({movie} : {movie?: MovieGetRes}) {
       <div className="min-h-[300px]">
         {activeTab === 'details' && (
           <div className="animate-in fade-in duration-500">
-            <h2 className="text-2xl font-serif mb-4 text-white">Nội dung cốt truyện</h2>
+            <h2 className="text-2xl font-playfair mb-4 text-white">Nội dung cốt truyện</h2>
             <p className="text-white/80 leading-relaxed max-w-4xl">
               {movie?.describe}
             </p>
@@ -63,18 +82,32 @@ export default function MovieTabs({movie} : {movie?: MovieGetRes}) {
 
         {activeTab === 'reviews' && (
           <div className="grid gap-6 animate-in slide-in-from-bottom-4 duration-500">
-             {[1, 2].map(i => (
-               <div key={i} className="p-6 rounded-2xl border border-white/5 bg-white/20 backdrop-blur-sm">
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="font-bold">Người dùng {i === 1 ? 'A' : 'B'}</span>
-                    <span className="text-xs text-white/40">vừa xong</span>
+            <div className="relative w-full">
+              <style>{`
+                .hide-scroll::-webkit-scrollbar { display: none; }
+                .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+              `}</style>
+
+              <textarea 
+                className="hide-scroll w-full p-6 pr-16 rounded-2xl border border-white/5 bg-white/20 text-white/70 italic focus:outline-none resize-none" 
+                placeholder='Viết bình luận...' 
+                rows={2}
+                onChange={(e) => setComment(e.target.value)}
+                value = {comment}
+              />
+              <button className="absolute bottom-4 right-4 p-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white transition-all active:scale-90"
+                onClick={handleComment}
+              >
+                <SendHorizonal className="w-4 h-4" />
+              </button>
+            </div>
+             {movie?.comments.map((item , index) => (
+               <div key={index} className="p-6 rounded-2xl border border-white/5 bg-white/20 backdrop-blur-sm">
+                  <div className="flex items-center gap-5 mb-3">
+                    <span className="font-bold">{item.customerName}</span>
+                    <span className="text-xs text-white/40">{format(item.createdAt, "yyyy-MM-dd")}</span>
                   </div>
-                  <div className="flex gap-1 mb-3">
-                    {[...Array(5)].map((_, index) => (
-                      <Star key={index} className={`w-4 h-4 ${index < 4 ? 'fill-yellow-400 text-yellow-400' : 'text-white/20'}`} />
-                    ))}
-                  </div>
-                  <p className="text-white/70 italic">"Phim cực kỳ ý nghĩa, màu sắc và âm nhạc tuyệt vời!"</p>
+                  <p className="text-white/70 italic">{item.comment}</p>
                </div>
              ))}
           </div>
