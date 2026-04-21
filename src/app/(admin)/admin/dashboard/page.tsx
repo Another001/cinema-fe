@@ -1,10 +1,8 @@
 'use client'
 
 import NavBar from "../../../../components/admin/NavBar"
-import { useState } from "react"
 
 export default function Page() {
-  const [tab, setTab] = useState<"Dashboard" | "Showtime" | "Movie">("Dashboard");
   return(
     <div className="relative z-10 flex-1 py-8 min-h-screen">
       <div className="max-w-7xl mx-auto px-8">
@@ -16,7 +14,7 @@ export default function Page() {
             Chào mừng trở lại, Admin!
           </div>
           <div className="text-[0.95rem] bg-[rgba(226, 232, 240, 0.6)] mb-6 text-white font-playfair">Quản lý rạp phim, vé và thống kê doanh thu của bạn tại đây.</div>
-          <NavBar tab = {tab} setTab={setTab}/>
+          <NavBar/>
         </div>
       </div>
     </div>

@@ -3,16 +3,6 @@ import { Star, Ticket, Bell} from 'lucide-react';
 import { MovieGetRes } from '@/src/types/Movie';
 import { useRouter } from 'next/navigation';
 
-const infoItems = [
-  { label: 'Đạo diễn', value: 'Hayao Miyazaki' },
-  { label: 'Diễn viên', value: 'Voice actors' },
-  { label: 'Thể loại', value: 'Hoạt hình' },
-  { label: 'Khởi chiếu', value: '10/04/2026' },
-  { label: 'Thời lượng', value: '103 phút' },
-  { label: 'Ngôn ngữ', value: 'Tiếng Nhật - Lồng tiếng Việt' },
-  { label: 'Xếp hạng', value: 'P - Phim được phép phổ biến' },
-];
-
 function RenderItems({label, value}: {label?: string, value?: string}){
   return(
     <div className="flex flex-col gap-1">
@@ -26,7 +16,7 @@ export default function MovieInfo({movie} : {movie?: MovieGetRes}) {
   const router = useRouter();
   return (
     <div className="flex flex-col">
-      <h1 className="text-3xl md:text-4xl font-black font-serif mb-6 leading-tight text-white font-outfit">
+      <h1 className="text-3xl md:text-4xl font-black mb-6 leading-tight text-white font-roboto font-bold">
         {movie?.name}
       </h1>
       <p className="text-white/80 leading-relaxed mb-8 text-lg">

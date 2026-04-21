@@ -1,17 +1,21 @@
 import type { Metadata } from "next";
 // Thay đổi Geist thành Playfair_Display và Outfit
-import { Playfair_Display, Outfit, Bitcount } from "next/font/google";
+import { Playfair_Display, Outfit, Roboto } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "../context/AuthContext";
 
-// Font cho tiêu đề - Hỗ trợ Tiếng Việt cực chuẩn
 const playfair = Playfair_Display({
   variable: "--font-playfair",
   subsets: ["vietnamese"], 
-  weight: "400",
+  weight: [ "400", "500", "600", "700", "800", "900"],
 });
 
-// Font cho nội dung - Hỗ trợ Tiếng Việt cực chuẩn
+const roboto = Roboto({
+  variable: "--font-roboto",
+  subsets: ["vietnamese"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"]
+})
+
 const outfit = Outfit({
   variable: "--font-outfit",
   subsets: ["vietnamese"] as any,
@@ -30,7 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi">
-      <body className={`${playfair.variable} ${outfit.variable}`}>
+      <body className={`${playfair.variable} ${outfit.variable} ${roboto.variable}`}>
         <AuthProvider>
           {children}
         </AuthProvider>

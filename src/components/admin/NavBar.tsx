@@ -1,14 +1,9 @@
 'use client'
 
-import { Home, Ticket, Film,  } from "lucide-react"
+import { Home, Ticket, Film, Warehouse } from "lucide-react"
 import Link from "next/link"
 
-interface Props{
-  tab : "Dashboard" | "Showtime" | "Movie",
-  setTab : any
-};
-
-export default function NavBar({tab, setTab} : Props ){
+export default function NavBar(){
   return(
     <div className="flex gap-4">
       <Link href="/" className="relative flex items-center px-[1.25rem] py-[0.5rem] rounded-xl border gap-3 text-white hover:text-yellow-500">
@@ -22,6 +17,10 @@ export default function NavBar({tab, setTab} : Props ){
       <Link href="/admin/showtime" className="relative flex items-center px-[1.25rem] py-[0.5rem] rounded-xl border gap-3 text-white text-[0.9rem] font-[600] hover:text-yellow-500">
         <Film className="w-7 h-7" />
         Lịch chiếu 
+      </Link>
+      <Link href="/admin/cinema" className="relative flex items-center px-[1.25rem] py-[0.5rem] rounded-xl border gap-3 text-white text-[0.9rem] font-[600] hover:text-yellow-500">
+        <Warehouse className="w-7 h-7" />
+        Quản lí rạp 
       </Link>
     </div>
   )

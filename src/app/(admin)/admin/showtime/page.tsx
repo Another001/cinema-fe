@@ -13,7 +13,7 @@ export default function SchedulePage() {
   const [loading, setLoading] = useState<boolean>(false);
   const [showtimes, setShowtimes] = useState<AdminShowtimeGroupByCity[]>([]);
   const [date, setDate] = useState<string>(new Date().toISOString().split('T')[0]); // Khởi tạo bằng ngày hôm nay
-  const [city, setCity] = useState<string>("Ha Noi"); // Khởi tạo bằng giá trị đầu tiên của select
+  const [city, setCity] = useState<string>("Hà Nội"); // Khởi tạo bằng giá trị đầu tiên của select
   useEffect(() => {
     setLoading(true); 
     const getData = async () =>{
@@ -34,16 +34,13 @@ export default function SchedulePage() {
     getData();
   },[date, city])
 
-  console.log("bine truynen vao show time", showtimes[0])
   return (
     <div className="min-h-screen text-white overflow-x-hidden font-['Outfit']">
-    
-
       <main className="relative z-10 max-w-7xl mx-auto px-8 py-12">
         {/* Page Header */}
         <div className="mb-12">
           <h1 className="font-playfair text-5xl font-black font-bold text-slate-200 mb-2">Lịch Chiếu Phim</h1>
-          <p className="text-slate-400/70 text-lg">Chọn ngày để xem lịch chiếu phim tại các rạp của chúng tôi</p>
+          <p className="text-slate-400/70 text-lg font-roboto font-bold">Chọn ngày để xem lịch chiếu phim</p>
         </div>
         <div className='flex justify-between items-center'>
           <div className='flex gap-12'>
@@ -65,17 +62,17 @@ export default function SchedulePage() {
                 onChange={(e) => setCity(e.target.value)}
                 value={city}
               >
-                <option value="Ha Noi">Hà Nội</option>
-                <option value="Ho Chi Minh">Hồ Chí Minh</option>
+                <option value="Hà Nội">Hà Nội</option>
+                <option value="Hồ Chí Minh">Hồ Chí Minh</option>
               </select>
             </div>
           </div>
           <div className='flex justify-between'>
-            <Link className='flex justify-between items-center font-outfit gap-3 pl-2 ml-3 pr-5 py-4 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 hover hover:text-pink-400'
+            <Link className='flex justify-between items-center gap-3 pl-2 ml-3 pr-5 py-4 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 hover hover:text-pink-400'
               href="/admin/create-showtime"
             >
               <Plus className='w-8 h-8' />
-              <div className='font-outfit text-xl'>Thêm suất chiếu</div>
+              <div className='font-roboto text-xl'>Thêm suất chiếu</div>
             </Link>
           </div>
         </div>  
@@ -87,7 +84,7 @@ export default function SchedulePage() {
               <Building2 className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-3xl font-extrabold text-slate-200">{city}</h2>
+              <h2 className="text-3xl font-extrabold text-slate-200 font-outfit">{city}</h2>
             </div>
           </div>
           {loading ? (

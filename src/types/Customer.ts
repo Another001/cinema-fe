@@ -11,7 +11,7 @@ export interface CustomerFakeLoginRes{
 
 export interface TicketGetRes{
   movieName: string,
-  address: string,
+  name: string,
   roomName: string,
   seatName: string,
   createdAt: string,

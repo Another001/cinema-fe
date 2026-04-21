@@ -5,8 +5,8 @@ import { format, parseISO } from 'date-fns';
 
 
 const CITY = [
-  { cityName: "Ha Noi" },
-  { cityName: "Ho Chi Minh" }
+  { cityName: "Hà Nội" },
+  { cityName: "Hồ Chí Minh" }
 ]
 
 interface Props {
@@ -23,7 +23,7 @@ interface Props {
 }
 
 export default function ShowtimeSelector({ selectedDate, selectedTime, onSelect, showtimes, selectedCinema, setShowtimeId }: Props) {
-  const [city, setCity] = useState<string>("Ha Noi");
+  const [city, setCity] = useState<string>("Hà Nội");
   const [roomName, setRoomName] = useState<string>("");
   const selectedCity = useMemo(() => {
     const filter = showtimes?.find((item) => item.cityName === city);

@@ -17,7 +17,7 @@
 @theme {
   --font-playfair: var(--font-playfair);
   --font-outfit: var(--font-outfit);
-  --font-bitcount: var(--font-bitcount);
+  --font-roboto: var(--font-roboto);
   --color-gold: #eab308;
   --color-test-la: #ff00ff;
 }

@@ -10,7 +10,7 @@ import { format } from 'date-fns';
 import PaymentModal from './PaymentModal';
 import bookingApi from '@/src/api/booking';
 import { getCustomerInfo } from '@/src/utils/localStorage.utils';
-import { createReservationReqDto, createReservationResDto } from '@/src/types/Booking';
+import {createReservationResDto } from '@/src/types/Booking';
 import Loading from '../../../../../components/Loading'
 import { useRouter } from 'next/navigation';
 
@@ -61,7 +61,7 @@ export default function BookingPage({ params }: {params: Promise<{ showtimeId: n
   const [reservation, setReservation] = useState<createReservationResDto>();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  React.useEffect(() => { 
+  React.useEffect(() => {
     const getData = async () => {
       const data = await showtimeApi.listSeats(showtimeId ?? 0);
       console.log(data);
@@ -95,7 +95,7 @@ export default function BookingPage({ params }: {params: Promise<{ showtimeId: n
 
         <SelectionSummary 
           showtime={format(new Date(showtimeDetail?.beginAt ?? "2026-04-02T17:23:58.223"), 'HH:mm')}
-          cinema={showtimeDetail?.cinemaAddress ?? "Cgv"}
+          cinema={showtimeDetail?.cinemaName ?? "Cgv"}
           seats={selectedSeats}
           total={totalPrice}
         />
@@ -107,7 +107,6 @@ export default function BookingPage({ params }: {params: Promise<{ showtimeId: n
         <div className="text-center mb-8">
           Bạn đã chọn: <strong className="text-yellow-500 text-xl">{selectedSeats.length}</strong> ghế
         </div>
-
         <SeatLegend />
         {isLoading?(
           <Loading />
@@ -123,7 +122,6 @@ export default function BookingPage({ params }: {params: Promise<{ showtimeId: n
           />
         )}
         
-
         <div className="bg-violet-500/10 border border-violet-500/20 rounded-2xl p-8 text-center max-w-sm mx-auto my-12 backdrop-blur-md">
           <p className="text-white/60 text-sm mb-1">Tổng tiền cần thanh toán</p>
           <p className="text-4xl font-black text-yellow-500">
@@ -133,10 +131,7 @@ export default function BookingPage({ params }: {params: Promise<{ showtimeId: n
 
         <ActionFooter canContinue={selectedSeats.length > 0} 
           onContinue={async() => {
-            
-            console.log("bodyyyy", {showtimeId: showtimeDetail?.id ?? 0, seats: seatIds ?? [], customerId: getCustomerInfo().id  })
             const newreservation = await bookingApi.createReservation({showtimeId: showtimeDetail?.id ?? 0, seats: seatIds ?? [], customerId: getCustomerInfo().id  })
-            console.log("reservationnnnn", newreservation);
             setReservation(newreservation)
             setIsModalOpen(true)}} /> 
       </main>

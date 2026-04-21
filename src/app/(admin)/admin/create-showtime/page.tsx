@@ -117,8 +117,8 @@ export default function AddShowtime() {
                   }}
                 >
                   <option value="">-- Chọn thành phố --</option>
-                  <option value="Ha Noi">Hà Nội</option>
-                  <option value="Ho Chi Minh">TP HCM</option>
+                  <option value="Hà Nội">Hà Nội</option>
+                  <option value="Hồ Chí Minh">TP HCM</option>
                 </select>
               </div>
               <div className="flex flex-col gap-2">

@@ -21,7 +21,6 @@ export default function Page({ params }: {params: Promise<{ id: number }>}) {
   },[])
   return (
     <div className="min-h-screen hero-bg flex flex-col">
-      <div className="film-grain" />
 
       <main className="relative z-10 flex-1 py-12">
         <div className="max-w-7xl mx-auto px-8">

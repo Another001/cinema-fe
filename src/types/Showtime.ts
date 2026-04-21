@@ -64,6 +64,7 @@ export interface ShowtimeGetResDto{
   beginAt: string,
   endAt: string,
   cinemaAddress: string,
+  cinemaName: string,
   seatPrices: [
     {
       seatType: string,

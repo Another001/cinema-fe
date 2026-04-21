@@ -6,17 +6,26 @@ import BookingCard from './BookingCard';
 import { adminGetShowtime } from '@/src/types/Booking';
 import bookingApi from '@/src/api/booking';
 import { useParams } from 'next/navigation';
-
+import MyLoading from '@/src/components/Loading';
 
 export default function CheckBookingsPage() {
   const [reservations, setReservations] = useState<adminGetShowtime[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const param = useParams();
   useEffect(() => {
+    setIsLoading(true);
     const getData = async () => {
-      console.log("My param", param)
-      const data = await bookingApi.adminGetShowtime(Number(param.showtimeId))
-      console.log("my dataaa",data);
-      setReservations(data);
+      try{
+        const data = await bookingApi.adminGetShowtime(Number(param.showtimeId))
+        console.log("my dataaa",data);
+        setReservations(data);
+      }
+      catch{
+        console.log("co loi khi tai du lieu")
+      }
+      finally{
+        setIsLoading(false)
+      }
     }
     getData();
   },[])
@@ -35,25 +44,29 @@ export default function CheckBookingsPage() {
           </div>
 
           {/* Booking List */}
+
           <div className="grid gap-6">
-            {reservations.length > 0 ? (
-              reservations.map((customer, index) => {
-                return(
-                <BookingCard
-                  key={index}
-                  customerName={customer.customerName}
-                  phone={customer.customerPhone}
-                  createdAt={customer.createdAt}
-                  isConfirm={customer.isConfirm}
-                  tickets={customer.customerReservation}
-                />
-              )})
-            ) : (
-              <div className="text-center py-20 bg-slate-800/40 rounded-[1.5rem] border border-slate-400/10 backdrop-blur-sm">
-                <Inbox className="w-16 h-16 mx-auto mb-4 text-slate-600 opacity-50" />
-                <p className="text-xl text-slate-400">Chưa có vé nào được đặt</p>
-                <p className="text-slate-500 mt-2 text-sm">Dữ liệu vé sẽ hiển thị ở đây</p>
-              </div>
+            {
+            isLoading ? (
+              <MyLoading />
+            ): reservations.length > 0 ? (
+                reservations.map((customer, index) => {
+                  return(
+                  <BookingCard
+                    key={index}
+                    customerName={customer.customerName}
+                    phone={customer.customerPhone}
+                    createdAt={customer.createdAt}
+                    isConfirm={customer.isConfirm}
+                    tickets={customer.customerReservation}
+                  />
+                )})
+              ) : (
+                <div className="text-center py-20 bg-slate-800/40 rounded-[1.5rem] border border-slate-400/10 backdrop-blur-sm">
+                  <Inbox className="w-16 h-16 mx-auto mb-4 text-slate-600 opacity-50" />
+                  <p className="text-xl text-slate-400">Chưa có vé nào được đặt</p>
+                  <p className="text-slate-500 mt-2 text-sm">Dữ liệu vé sẽ hiển thị ở đây</p>
+                </div>
             )}
           </div>
         </div>

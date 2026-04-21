@@ -26,10 +26,10 @@ export const TicketCard = (props : TicketGetRes) => {
         <div className="space-y-4">
           <div className="flex justify-between items-center border-b border-white/5 pb-3">
             <span className="text-xs font-semibold text-white/60 uppercase tracking-wider">Rạp phim</span>
-            <span className="text-yellow-500 font-bold">{props.address}</span>
+            <span className="text-yellow-500 font-bold">{props.name}</span>
           </div>
           <div className="flex justify-between items-center border-b border-white/5 pb-3">
-            <span className="text-xs font-semibold text-white/60 uppercase tracking-wider">Địa chỉ</span>
+            <span className="text-xs font-semibold text-white/60 uppercase tracking-wider">Phòng chiếu</span>
             <span className="text-yellow-500 font-bold text-right ml-4">{props.roomName}</span>
           </div>
         </div>
