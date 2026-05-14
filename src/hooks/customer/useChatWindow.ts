@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { MessageGetRes } from "@/src/types/Message";
+import { getCustomerInfo } from "@/src/utils/localStorage.utils";
 
 export default function useChatWindow(conversationId: number | undefined, connection: signalR.HubConnection | null){
   const [messages, setMessages] = useState<MessageGetRes[]>([]);
+  const customer = getCustomerInfo();
   useEffect(() => {
     if(!conversationId || !connection)
       return;
@@ -41,6 +43,11 @@ export default function useChatWindow(conversationId: number | undefined, connec
       }
     };
   },[conversationId, connection])
+  useEffect(() => {
+    if(messages.length < 1)
+      return
+    markAsRead(customer.id, messages[0].messageId);
+  },[messages])
   const sendMessage = async (userId: number, message: string) => {
     if(!userId || !conversationId || !connection)
       return;
@@ -48,8 +55,15 @@ export default function useChatWindow(conversationId: number | undefined, connec
     await connection.invoke("SendMessage", userId, conversationId, message);
     console.log("Da gui tin nhan");
   }
+  const markAsRead = async (userId: number, messageId: number) => {
+    if(!connection || !userId)
+      return;
+    await connection.invoke("MaskAsRead", userId,conversationId, messageId);
+    console.log("da doc tin nhan nhe", messageId);
+  }
   return {
     messages,
-    sendMessage
+    sendMessage,
+    markAsRead
   }
 }

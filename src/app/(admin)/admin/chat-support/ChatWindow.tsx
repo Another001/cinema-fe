@@ -17,7 +17,7 @@ interface Props{
 export default function ChatWindow({selectedContact, connection} : Props) {
   const userId = getCustomerInfo();
   const [historyMessages, setHistoryMessages] = useState<MessageGetRes[]>([]);
-  const {messages, sendMessage} = useChatWindow(selectedContact?.conversationId ?? 0, connection)
+  const {messages, sendMessage, markAsRead} = useChatWindow(selectedContact?.conversationId ?? 0, connection)
   const [input, setInput] = useState<string>("")
   const autoScroll = useRef<HTMLDivElement | null>(null);
   const handleSend = useCallback(async () => {
@@ -32,6 +32,8 @@ export default function ChatWindow({selectedContact, connection} : Props) {
         return;
       const data = await messageApi.getMessage(selectedContact.conversationId);
       setHistoryMessages(data);
+      if(data.length > 0)
+        markAsRead(userId.id, data[data.length - 1].messageId);
       const element = autoScroll.current;
       if(element){
         setTimeout(() => {

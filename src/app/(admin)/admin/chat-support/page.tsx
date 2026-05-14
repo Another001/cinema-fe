@@ -2,7 +2,7 @@
 
 import Sidebar from "./SideBar";
 import ChatWindow from "./ChatWindow";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getCustomerInfo } from "@/src/utils/localStorage.utils";
 import { useRouter } from "next/navigation";
 import { ContactGetResDTO } from "@/src/types/Message";
@@ -14,12 +14,14 @@ export default function TelegramPage() {
   const router = useRouter();
   const [selectedContact, setSelectedContact] = useState<ContactGetResDTO>();
   const connection = useChat();
-  if(!userId && typeof window == "undefined"){
-    router.push("/login");
-  }
+  useEffect(() => {
+    if(!userId){
+        router.push("/login");
+    }
+  }, [userId]);
   return (
       <main className="h-screen w-full flex bg-[#17212b] text-white overflow-hidden font-sans">
-        <Sidebar selectedContact={selectedContact} setSelectedContact={setSelectedContact}/>
+        <Sidebar selectedContact={selectedContact} setSelectedContact={setSelectedContact} connection={connection}/>
         {
           selectedContact ?(
             <ChatWindow selectedContact={selectedContact} connection={connection}

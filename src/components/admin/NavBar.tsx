@@ -1,6 +1,6 @@
 'use client'
 
-import { Home, Ticket, Film, Warehouse } from "lucide-react"
+import { Home, Ticket, Film, Warehouse, MessageCircle } from "lucide-react"
 import Link from "next/link"
 
 export default function NavBar(){
@@ -21,6 +21,10 @@ export default function NavBar(){
       <Link href="/admin/cinema" className="relative flex items-center px-[1.25rem] py-[0.5rem] rounded-xl border gap-3 text-white text-[0.9rem] font-[600] hover:text-yellow-500">
         <Warehouse className="w-7 h-7" />
         Quản lí rạp 
+      </Link>
+      <Link href="/admin/chat-support" className="relative flex items-center px-[1.25rem] py-[0.5rem] rounded-xl border gap-3 text-white text-[0.9rem] font-[600] hover:text-yellow-500">
+        <MessageCircle className="w-7 h-7" />
+        Chăm sóc khách hàng 
       </Link>
     </div>
   )

@@ -1,15 +1,37 @@
 'use client'
 
-import { ContactGetResDTO } from "@/src/types/Message";
+import { ContactGetResDTO, PreviewMessageResDTO } from "@/src/types/Message";
 import { Menu, Search, Pencil, Check, AArrowDown } from "lucide-react";
 import { useEffect, useState } from "react";
 import { changeToHourMinute } from "@/src/utils/datetime";
 import { getCustomerInfo } from "@/src/utils/localStorage.utils";
 import messageApi from "@/src/api/message";
+import useSideBar from "@/src/hooks/admin/useSideBar";
 
-export default function Sidebar({selectedContact, setSelectedContact, connection}: {selectedContact? : ContactGetResDTO, setSelectedContact: any, connection? : signalR.HubConnection}) {
+export default function Sidebar({selectedContact, setSelectedContact, connection}: {selectedContact? : ContactGetResDTO, setSelectedContact: any, connection: signalR.HubConnection | null}) {
   const [contactList, setContactList] = useState<ContactGetResDTO[]>([]);
+  const {contactState} = useSideBar(connection);
   const user = getCustomerInfo();
+  useEffect(() => {
+    const newContactList: ContactGetResDTO[] = contactList.map(x => {
+      if(x.conversationId != contactState?.conversationId)
+        return x; 
+      const newContact : ContactGetResDTO = {
+        conversationId : x.conversationId,
+        nameContact : x.nameContact,
+        previewMessage : {
+          lastMessage: contactState.previewMessage.lastMessage,
+          lastMessageId: contactState.previewMessage.lastMessageId,
+          senderName : x.previewMessage.senderName,
+          senderId: x.previewMessage.senderId,
+          timeLastMessage: contactState.previewMessage.timeLastMessage,
+          isSeen : x.conversationId == selectedContact?.conversationId
+        }
+      } 
+      return newContact;
+    });
+    setContactList(newContactList);
+  },[contactState])
   useEffect(() => {
     const getData = async () => {
       if(!user)
