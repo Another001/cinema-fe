@@ -1,3 +1,4 @@
+import ChatSupport from "@/src/components/user/ChatSupport";
 import Header from "@/src/components/user/Header";
 
 export default function RootLayout({
@@ -6,9 +7,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>
+    <div className="relative">
       <Header />
       {children}
+      <ChatSupport />
     </div>
   );
 }

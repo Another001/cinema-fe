@@ -14,7 +14,7 @@ export default function Header() {
 
 
   return (
-    <div className="sticky top-0 z-[100] flex items-center hero-bg text-white justify-between px-12 py-5 border-b border-white/5">
+    <div className="sticky top-0 z-[20] flex items-center hero-bg text-white justify-between px-12 py-5 border-b border-white/5">
       {/* LOGO */}
       <Link className="flex items-center gap-3 relative z-20 group" href="/">
         <div className="w-10 h-10 rounded-lg bg-yellow-500 flex items-center justify-center shadow-[0_0_15px_rgba(234,179,8,0.4)]">
@@ -36,6 +36,7 @@ export default function Header() {
               <span>Xin chào, {user?.name}</span>
               <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
             </div>
+            
 
             {/* DROPDOWN MENU */}
             <div className="absolute top-full right-0 mt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 transition-all duration-300 z-[110]">

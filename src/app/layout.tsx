@@ -34,7 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi">
-      <body className={`${playfair.variable} ${outfit.variable} ${roboto.variable}`}>
+      <body className={`${playfair.variable} ${outfit.variable} ${roboto.variable}`} suppressHydrationWarning={true}>
         <AuthProvider>
           {children}
         </AuthProvider>

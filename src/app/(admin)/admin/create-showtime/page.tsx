@@ -129,7 +129,7 @@ export default function AddShowtime() {
                   <option value="">-- Chọn rạp --</option>
                   {
                   cinemaList?.cinemas.map(item => (
-                    <option key = {item.cinemaId} value={item.address}>{item.address}</option>
+                    <option key = {item.cinemaId} value={item.address}>{item.name}</option>
                   ))
                   }
                 </select>

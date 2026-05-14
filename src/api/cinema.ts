@@ -1,3 +1,4 @@
+
 import { CityListRes, CreateCinemaReq, CreateRoomReq } from "../types/Cinema";
 import apiInstance from "./apiInstance";
 
