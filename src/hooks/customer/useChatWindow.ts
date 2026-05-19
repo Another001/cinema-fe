@@ -8,6 +8,7 @@ export default function useChatWindow(conversationId: number | undefined, connec
   const [messages, setMessages] = useState<MessageGetRes[]>([]);
   const customer = getCustomerInfo();
   useEffect(() => {
+    setMessages([])
     if(!conversationId || !connection)
       return;
     const startChat = async () => {

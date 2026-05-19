@@ -54,6 +54,10 @@ export default function ChatWindow({selectedContact, connection} : Props) {
     }
   },[messages])
   const allMessage : MessageGetRes[] = useMemo(() => [...historyMessages, ...messages], [historyMessages, messages])
+  if(!selectedContact)
+    return (
+      <section className="flex-1 flex flex-col chat-bg min-w-0"></section>
+    )
   return (
     <section className="flex-1 flex flex-col chat-bg min-w-0">
       {/* Header */}
@@ -63,7 +67,10 @@ export default function ChatWindow({selectedContact, connection} : Props) {
         </div>
         <div className="flex-1 min-w-0">
           <h2 className="font-semibold truncate">{selectedContact?.nameContact}</h2>
-          <p className="text-xs text-[#3390ec]">đang hoạt động</p>
+          <div className="flex gap-2 items-end">
+            <p className="text-sm text-white">Số điện thoại:</p>
+            <p className="text-xs text-[#3390ec]">{selectedContact?.phoneContact}</p>
+          </div>
         </div>
         <div className="flex items-center gap-1">
           {[Phone, Video, Search, MoreVertical].map((Icon, i) => (

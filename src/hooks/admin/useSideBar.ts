@@ -1,8 +1,7 @@
 'use client'
 
 import { useEffect, useState, useSyncExternalStore } from "react";
-import { ContactGetResDTO, MessageGetRes } from "@/src/types/Message";
-import { UserRoundIcon } from "lucide-react";
+import { ContactGetResDTO } from "@/src/types/Message";
 
 export default function useSideBar(connection: signalR.HubConnection | null){
   const [contactState, setContactState] = useState<ContactGetResDTO>();
@@ -12,17 +11,17 @@ export default function useSideBar(connection: signalR.HubConnection | null){
     const startChat = async () => {
       try{
         console.log("Vao sidebar thanh cong");
-        connection.on("UpdateChatList", (senderId, conversationId, message, msgId, msgCreatedAt) => {
-          console.log("nhan message sidebar");
+        connection.on("UpdateChatList", (senderName, senderId, conversationId, message, msgId, senderPhone, msgCreatedAt) => {
+          console.log("nhan message sidebar", senderName, senderId, conversationId, message, msgId, senderPhone, msgCreatedAt);
           setContactState({
             conversationId: conversationId,
-            nameContact: " ",
+            nameContact: senderName,
             previewMessage: {
               lastMessageId: msgId,
               lastMessage : message,
               senderId,
               timeLastMessage: msgCreatedAt,
-              senderName: " ",
+              senderName: senderName,
               isSeen: true
             },
           })
@@ -42,7 +41,14 @@ export default function useSideBar(connection: signalR.HubConnection | null){
       connection.off("UpdateChatList");
     };
   },[connection])
+  const markAsReadForSideBar = async (userId: number, messageId: number, conversationId : number) => {
+    if(!connection || !userId)
+      return;
+    await connection.invoke("MaskAsRead", userId, conversationId, messageId);
+    console.log("da doc tin nhan nhe", messageId);
+  }
   return {
     contactState,
+    markAsReadForSideBar
   }
 }

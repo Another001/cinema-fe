@@ -8,6 +8,7 @@ export interface MessageGetRes{
 export interface ContactGetResDTO{
   conversationId: number,
   nameContact: string,
+  phoneContact? : string,
   previewMessage: PreviewMessageResDTO
 }
 

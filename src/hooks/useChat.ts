@@ -2,13 +2,13 @@
 
 import { useEffect, useState, useRef } from 'react';
 import * as signalR from '@microsoft/signalr';
-import { getCustomerInfo } from '../utils/localStorage.utils';
+import { useAuthContext } from '../context/AuthContext';
 
 export const useChat = () => {
   const [connection, setConnection] = useState<signalR.HubConnection | null>(null);
   const connectionRef = useRef<signalR.HubConnection | null>(null);
+  const userId = useAuthContext();
   useEffect(() => {
-    const userId = getCustomerInfo()
     if (!userId || connectionRef.current) return;
 
     const newConnection = new signalR.HubConnectionBuilder()
@@ -31,7 +31,7 @@ export const useChat = () => {
           newConnection.stop();
       }
     };
-  }, []);
+  }, [userId]);
 
   return connection;
 };

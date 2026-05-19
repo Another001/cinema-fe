@@ -3,13 +3,13 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { MessageCircle, X, Send } from 'lucide-react';
 import useChatWindow from '@/src/hooks/customer/useChatWindow';
-import { getCustomerInfo } from '@/src/utils/localStorage.utils';
 import { MessageGetRes } from '@/src/types/Message';
 import messageApi from '@/src/api/message';
 import { useChat } from '@/src/hooks/useChat';
+import { useAuthContext } from '@/src/context/AuthContext';
 
 export default function ChatSupport() {
-  const customer = getCustomerInfo();
+  const customer = useAuthContext();
   const connection = useChat();
   const [isOpen, setIsOpen] = useState(false);
   const [historyMessages, setHistoryMessage] = useState<MessageGetRes[]>([]);
@@ -21,7 +21,7 @@ export default function ChatSupport() {
     if(!input || !customer)
       return;
     try{
-      await sendMessage(customer.id, input);
+      await sendMessage(customer.user.id, input);
       console.log("gui message thanh cong")
     }
     catch{
@@ -34,7 +34,9 @@ export default function ChatSupport() {
 
   useEffect(() => {
     const getData = async () => {
-      const getConversationId = await messageApi.getConversation(customer.id);
+      if(!customer.user || customer.user.id == 44)
+        return;
+      const getConversationId = await messageApi.getConversation(customer.user?.id);
       setConversationId(getConversationId)
       const data = await messageApi.getMessage(getConversationId);
       setHistoryMessage(data);
@@ -46,7 +48,7 @@ export default function ChatSupport() {
       }
     }
     getData();
-  },[]);
+  },[customer]);
 
   useEffect(() => {
     const element = autoScroll.current;
@@ -98,7 +100,7 @@ export default function ChatSupport() {
 
               {/* Danh sách tin nhắn */}
               {allMessages.map((items, index) => {
-                const isMine = items.senderId == customer.id;
+                const isMine = items.senderId == customer?.user?.id;
 
                 return (
                   <div

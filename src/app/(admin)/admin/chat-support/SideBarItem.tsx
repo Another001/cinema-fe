@@ -3,18 +3,18 @@ import { changeToHourMinute } from "@/src/utils/datetime";
 import { Check } from "lucide-react";
 
 interface Props {
-  chat : ContactGetResDTO, isSeen: boolean, contactList: ContactGetResDTO[], setSelectedContact: any
+  chat : ContactGetResDTO, isSeen: boolean, contactList: ContactGetResDTO[], setSelectedContact: any, setFindBar : any
 }
 
-export default function SideBarItem({chat, isSeen, contactList, setSelectedContact }: Props){
+export default function SideBarItem({chat, isSeen, contactList, setSelectedContact, setFindBar}: Props){
   return(
     <button 
       className={`w-full flex items-center gap-3 px-3 py-2.5 transition hover:bg-[#202b36] `}
       onClick={ () => {
         const contact = contactList?.find(x => x.conversationId == chat.conversationId);
-        console.log("contact la ", contact)
         if(contact){
           setSelectedContact(contact)
+          setFindBar("")
         }
       }}
     >
@@ -34,10 +34,14 @@ export default function SideBarItem({chat, isSeen, contactList, setSelectedConta
         </div>
         <div className="flex items-center justify-between gap-2 mt-0.5">
           {/*Select nho them vao*/}
-          <p className={`text-sm truncate flex items-center gap-1 text-gray-400`}>
-            {true && <Check size={14} className="text-sky-400" />}
-            {chat.previewMessage?.lastMessage ?? ""}
-          </p>
+          <div className={`text-sm truncate flex items-center gap-1 text-gray-400`}>
+            <p>{chat.previewMessage.senderId == 44 ? "Bạn" : chat.previewMessage.senderName}: </p>
+            <p>{chat.previewMessage?.lastMessage && (
+              chat.previewMessage.lastMessage.length > 10 
+                ? `${chat.previewMessage.lastMessage.slice(0, 10)}...` 
+                : chat.previewMessage.lastMessage
+            )}</p>
+          </div>
           {!isSeen && (
             <span className="min-w-[10px] h-3 px-1.5 bg-[#66CCFF] text-[5px] font-bold rounded-full flex items-center justify-center">
             </span>
