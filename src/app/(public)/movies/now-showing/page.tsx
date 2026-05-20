@@ -17,7 +17,7 @@ export default function Page(){
   return(
     <div className="min-h-screen hero-bg text-white selection:bg-yellow-500/30 px-12 py-8">
       <div className="flex flex-col mb-10">
-        <h2 className="text-3xl font-bold font-serif">Phim đang chiếu</h2>
+        <h2 className="text-3xl font-bold font-playfair">Phim đang chiếu</h2>
         <p className="text-gray-500 mt-1 text-sm">Những bộ phim hot nhất tại rạp</p>
       </div>
       <ListMovie movies={movies} type="now" isListAll={true} />

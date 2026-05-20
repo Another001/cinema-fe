@@ -20,6 +20,10 @@ export default function ChatSupport() {
   const handleSend = async () => {
     if(!input || !customer)
       return;
+    if(!customer.user){
+      alert("Vui lòng đăng nhập để chat")
+      return;
+    }
     try{
       await sendMessage(customer.user.id, input);
       console.log("gui message thanh cong")
@@ -34,8 +38,11 @@ export default function ChatSupport() {
 
   useEffect(() => {
     const getData = async () => {
-      if(!customer.user || customer.user.id == 44)
+      if(!customer.user || customer.user.id == 44){
+        setHistoryMessage([]);
         return;
+      }
+
       const getConversationId = await messageApi.getConversation(customer.user?.id);
       setConversationId(getConversationId)
       const data = await messageApi.getMessage(getConversationId);

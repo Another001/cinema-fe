@@ -20,8 +20,9 @@ export default function HomePage() {
   const [movieNow, setMovieNow] = useState<MovieGetRes[]>([]);
   const [movieUpcoming, setMovieUpcoming] = useState<MovieGetRes[]>([]);
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   useEffect(() => {
+    setIsLoading(true)
     const getData = async () =>{
       try {
         const movienow = await movieApi.getNowMovie();
@@ -31,6 +32,9 @@ export default function HomePage() {
         setIsLoading(false);
       } catch (err) {
         setError(err as string);
+      }
+      finally{
+        setIsLoading(false)
       }
     }
     getData();

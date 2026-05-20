@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { MessageGetRes } from "@/src/types/Message";
-import { getCustomerInfo } from "@/src/utils/localStorage.utils";
+import { useAuthContext } from "@/src/context/AuthContext";
 
 export default function useChatWindow(conversationId: number | undefined, connection: signalR.HubConnection | null){
   const [messages, setMessages] = useState<MessageGetRes[]>([]);
-  const customer = getCustomerInfo();
+  const customer = useAuthContext();
   useEffect(() => {
     setMessages([])
     if(!conversationId || !connection)
@@ -43,11 +43,11 @@ export default function useChatWindow(conversationId: number | undefined, connec
           .catch(err => console.error("Lỗi khi rời phòng:", err));
       }
     };
-  },[conversationId, connection])
+  },[conversationId, connection, customer])
   useEffect(() => {
-    if(messages.length < 1)
+    if(messages.length < 1 || !customer.user)
       return
-    markAsRead(customer.id, messages[0].messageId);
+    markAsRead(customer.user.id, messages[0].messageId);
   },[messages])
   const sendMessage = async (userId: number, message: string) => {
     if(!userId || !conversationId || !connection)
