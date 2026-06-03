@@ -59,7 +59,7 @@ export default function useChatWindow(conversationId: number | undefined, connec
   const markAsRead = async (userId: number, messageId: number) => {
     if(!connection || !userId)
       return;
-    await connection.invoke("MaskAsRead", userId,conversationId, messageId);
+  //  await connection.invoke("MaskAsRead", userId,conversationId, messageId);
     console.log("da doc tin nhan nhe", messageId);
   }
   return {

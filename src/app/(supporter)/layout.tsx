@@ -14,11 +14,7 @@ export default function RootLayout({
   const router = useRouter();
   useEffect(() => {
     if (!isLoading) {
-      console.log("roleeeee", user.role)
-      if(user.role == "Support"){
-        router.replace("/supporter");
-      }
-      if (!user || user.name !== "Admin") {
+      if (!user || (user.name !== "Admin" && user.role != "Support")) {
         router.replace("/");
       }
     }

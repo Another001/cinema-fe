@@ -1,4 +1,4 @@
-import ChatSupport from "@/src/components/user/ChatSupport";
+import ChatSupport from "@/src/components/user/ChatSupport-v2";
 import Header from "@/src/components/user/Header";
 
 export default function RootLayout({

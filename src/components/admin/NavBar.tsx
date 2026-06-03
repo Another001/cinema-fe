@@ -22,10 +22,10 @@ export default function NavBar(){
         <Warehouse className="w-7 h-7" />
         Quản lí rạp 
       </Link>
-      <Link href="/admin/chat-support" className="relative flex items-center px-[1.25rem] py-[0.5rem] rounded-xl border gap-3 text-white text-[0.9rem] font-[600] hover:text-yellow-500">
+      <Link href="/supporter" className="relative flex items-center px-[1.25rem] py-[0.5rem] rounded-xl border gap-3 text-white text-[0.9rem] font-[600] hover:text-yellow-500">
         <MessageCircle className="w-7 h-7" />
         Chăm sóc khách hàng 
       </Link>
     </div>
-  )
+  ) 
 }

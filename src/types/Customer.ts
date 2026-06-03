@@ -7,6 +7,7 @@ export interface CustomerFakeLoginRes{
   id : number
   name : string,
   phone : string,
+  role: string,
 }
 
 export interface TicketGetRes{

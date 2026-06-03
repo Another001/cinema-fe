@@ -3,6 +3,7 @@ export interface MessageGetRes{
   message: string,
   createdAt: string,
   senderId: number,
+  senderName? : string
 }
 
 export interface ContactGetResDTO{

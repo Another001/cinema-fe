@@ -22,12 +22,15 @@ export default function LoginPage() {
       const customer = await customerApi.fakeLogin({ phone, password });
       loginSuccess(customer);
       console.log("customer infor", customer.name)
-      if(customer.name == "Admin")
+      console.log("customer role la ", customer.role)
+      console.log("customer role cos la support ko ", customer.role == "Support")
+      if(customer.role == "Admin")
         router.replace('/admin/dashboard')
+      else if(customer.role == "Support")
+        router.replace('/supporter')
       else{
         router.replace('/');
       }
-
     } catch (ex) {
       setError("Đăng nhập thất bại");
     }
