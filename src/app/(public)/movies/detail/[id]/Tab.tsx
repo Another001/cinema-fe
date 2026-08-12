@@ -1,6 +1,6 @@
 // components/MovieTabs.tsx
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MovieGetRes } from '@/src/types/Movie';
 import {format} from 'date-fns'
 import { SendHorizonal } from 'lucide-react';

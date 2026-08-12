@@ -1,40 +1,18 @@
-const data = [
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},{}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-  {}, {}, {}, {}, {}, {},
-]
+"use client";
+import { CldImage } from 'next-cloudinary';
 
-export default function Page(){
+// By default, the CldImage component applies auto-format and auto-quality to all delivery URLs for optimized delivery.
+export default function Page() {
   return (
-    <div className=''>
-      {data.map((item, idx) => (
-        <div key = {idx} className='text-xl text-white mt-5'>Nothinggg</div>        
-      ))}
-    </div>
-  )
+    <CldImage
+      src="cld-sample-5" // Use this sample image or upload your own via the Media Library
+      width="500" // Transform the image: auto-crop to square aspect_ratio
+      height="500"
+      crop={{
+        type: 'auto',
+        source: true
+      }}
+      alt="khong co mo ta"
+    />
+  );
 }

@@ -87,14 +87,17 @@ export default function ChatWindow({selectedContact, connection} : Props) {
           const previousMessage = index > 0 ? allMessage[index - 1] : null;          
         //  const isDifferentSender = !previousMessage || previousMessage.senderId !== items.senderId;
           const shouldShowName = items.senderId !== previousMessage?.senderId ;
+          const isOut = items.senderId === Number(userId.id);
           return (
-            <div key = {index} className={`flex flex-col max-w-[70%] ${items.senderId === Number(userId.id) ? 'self-end items-end' : 'self-start items-start'}`}>
+            <div key={items.messageId || index} className={`flex w-full ${isOut ? 'justify-end' : 'justify-start'}`}>
+              <div className="flex flex-col max-w-[75%]">
               {/**/shouldShowName && (
                 <span className="text-xs text-blue-400 font-semibold mb-1 mx-2">
                   {items.senderName || "Người dùng"}
                 </span>
               )/**/}
               <MessageItem type={items.senderId == Number(userId.id) ? "out" : "in"} text={items.message} time={items.createdAt as string}/>
+              </div>
             </div>
           )
           })

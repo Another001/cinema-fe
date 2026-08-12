@@ -12,6 +12,7 @@ export default function RootLayout({
 }>) {
   const{user, isLoading} = useAuthContext();
   const router = useRouter();
+  console.log("render rooot layouttttt");
   useEffect(() => {
     if (!isLoading) {
       console.log("roleeeee", user.role)
