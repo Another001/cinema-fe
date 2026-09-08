@@ -54,7 +54,7 @@ export default function AddShowtime() {
       router.push("/admin/showtime")
     }
     catch(ex){
-      alert(`Tao suat chieu that bai ${ex?.response.data}`)
+      alert(`Tao suat chieu that bai`)
     }
     finally{
       setLoading(false)

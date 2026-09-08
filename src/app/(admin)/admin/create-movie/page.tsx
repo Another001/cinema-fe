@@ -18,7 +18,7 @@ export default function AddMoviePage() {
       name: data.name as string,
       title: data.title as string,
       describe: data.describe as string,
-      duration: data.duration as number,
+      duration: Number(data.duration),
       releaseDate: data.releaseDate as string,
       endDate : data.endDate as string,
       genre: data.genre as string,
