@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Playfair_Display, Outfit, Roboto } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "../context/AuthContext";
+import { Analytics } from "@vercel/analytics/next";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -37,6 +38,7 @@ export default function RootLayout({
       <body className={`${playfair.variable} ${outfit.variable} ${roboto.variable}`} suppressHydrationWarning={true}>
         <AuthProvider>
           {children}
+          <Analytics />
         </AuthProvider>
       </body>
     </html>
