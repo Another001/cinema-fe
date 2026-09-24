@@ -109,6 +109,15 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ARG NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
 ENV NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=$NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
 
+# SỬA-DEPLOY: thêm 2 biến URL của BE để Next.js "đóng cứng" vào JS lúc build.
+# Để làm gì: apiInstance.ts + useChat*.ts đọc 2 biến này. Local là http://localhost:5102...,
+# deploy là public URL (Tunnel/Render). Đổi URL là phải build lại image (không đổi bằng docker run -e được).
+# CODE CŨ: trước đây chỉ có CLOUDINARY, thiếu 2 dòng dưới nên image build ra vẫn gọi localhost.
+ARG NEXT_PUBLIC_API_URL
+ARG NEXT_PUBLIC_SIGNALR_URL
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_SIGNALR_URL=$NEXT_PUBLIC_SIGNALR_URL
+
 # RUN npm run build
 #   - Chạy lệnh "build": "next build" trong package.json.
 #   - Next.js sẽ biên dịch TypeScript + Tailwind + React thành file tối ưu

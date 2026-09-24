@@ -18,8 +18,12 @@ export const useChat = (isSocket: boolean) => {
     let isTokenActive = true; // Cờ bảo vệ chống trùng lặp kết nối (React Strict Mode)
     console.log("=== [useChat] Đang khởi tạo kết nối SignalR mới ===");
 
+    // SỬA-DEPLOY: đọc URL SignalR từ env NEXT_PUBLIC_SIGNALR_URL thay vì hardcode localhost.
+    // Để làm gì: local là http://localhost:5102, deploy là public URL của BE (Tunnel/Render).
+    // CODE CŨ (giữ lại tham khảo, đừng xóa):
+    //   .withUrl("http://localhost:5102/chatHub-v2")
     const newConnection = new signalR.HubConnectionBuilder()
-      .withUrl("http://localhost:5102/chatHub-v2")
+      .withUrl(`${process.env.NEXT_PUBLIC_SIGNALR_URL ?? 'http://localhost:5102'}/chatHub-v2`)
       .withAutomaticReconnect()
       .build();
 

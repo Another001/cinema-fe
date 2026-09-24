@@ -11,8 +11,12 @@ export const useChat = () => {
   useEffect(() => {
     if (!userId || connectionRef.current) return;
 
+    // SỬA-DEPLOY: đọc URL SignalR từ env NEXT_PUBLIC_SIGNALR_URL thay vì hardcode localhost.
+    // Để làm gì: local là http://localhost:5102, deploy là public URL của BE (Tunnel/Render).
+    // CODE CŨ (giữ lại tham khảo, đừng xóa):
+    //   .withUrl("http://localhost:5102/chatHub")
     const newConnection = new signalR.HubConnectionBuilder()
-      .withUrl("http://localhost:5102/chatHub")
+      .withUrl(`${process.env.NEXT_PUBLIC_SIGNALR_URL ?? 'http://localhost:5102'}/chatHub`)
       .withAutomaticReconnect()
       .build();
     connectionRef.current = newConnection;
